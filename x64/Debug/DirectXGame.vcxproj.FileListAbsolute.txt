@@ -1,1 +1,2 @@
 C:\Users\Vincent\source\repos\DirectXGame\x64\Debug\DirectXGame.exe
+C:\Users\Student\Vincent Eugene Tan - GDENG-2\GDENG-2-DirectXGameEngine\x64\Debug\DirectXGame.exe

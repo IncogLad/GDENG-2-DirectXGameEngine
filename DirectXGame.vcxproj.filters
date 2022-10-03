@@ -64,6 +64,8 @@
       <Filter>GameEngine\GraphicsEngine\ConstantBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Quads.cpp" />
+    <ClCompile Include="AGameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -94,6 +96,8 @@
       <Filter>GameEngine\GraphicsEngine\ConstantBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Quads.h" />
+    <ClInclude Include="AGameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx">

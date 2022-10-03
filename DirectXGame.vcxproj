@@ -132,12 +132,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AGameObject.cpp" />
     <ClCompile Include="AppWindow.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="Quads.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
@@ -145,11 +147,13 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AGameObject.h" />
     <ClInclude Include="AppWindow.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="Quads.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="VertexBuffer.h" />
