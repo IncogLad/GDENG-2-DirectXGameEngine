@@ -12,6 +12,8 @@ class GraphicsEngine
 {
 public:
 	GraphicsEngine();
+	void initialize();
+	void destroy();
 	//Initialize the GraphicsEngine and DirectX 11 Device
 	bool init();
 	//Release all the resources loaded
@@ -31,9 +33,10 @@ public:
 	void releaseCompiledShader();
 
 public:
-	static GraphicsEngine* get();
+	static GraphicsEngine* getInstance();
 
 private:
+	static GraphicsEngine* sharedInstance;
 	DeviceContext* m_imm_device_context;
 private:
 	ID3D11Device* m_d3d_device;
@@ -59,5 +62,5 @@ private:
 	friend class ConstantBuffer;
 	friend class VertexShader;
 	friend class PixelShader;
-
+	
 };

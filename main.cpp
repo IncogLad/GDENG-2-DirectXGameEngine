@@ -2,13 +2,13 @@
 
 int main()
 {
-	AppWindow app;
-	if (app.init())
+	AppWindow::initialize();
+	AppWindow* app = AppWindow::getInstance();
+	
+
+	while (app->isRun())
 	{
-		while (app.isRun())
-		{
-			app.broadcast();
-		}
+		app->broadcast();
 	}
 	
 
