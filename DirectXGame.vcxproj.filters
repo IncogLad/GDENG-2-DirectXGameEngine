@@ -31,6 +31,15 @@
     <Filter Include="GameEngine\GraphicsEngine\ConstantBuffer">
       <UniqueIdentifier>{6b9b4a77-f3c1-4856-b322-81dbf6b864e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\RenderManager">
+      <UniqueIdentifier>{75f3cf98-4f27-4746-8080-49b15388ae4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\RenderManager\PrimitiveObject">
+      <UniqueIdentifier>{39ff02e7-ef3e-4265-bc6b-e6dbeb049fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\EngineTimeSystem">
+      <UniqueIdentifier>{d8ce9249-b631-4972-b619-12549e45bb17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -63,9 +72,16 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>GameEngine\GraphicsEngine\ConstantBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Quads.cpp" />
-    <ClCompile Include="AGameObject.cpp" />
+    <ClCompile Include="Renderer.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="AGameObject.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Quads.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -95,9 +111,16 @@
     <ClInclude Include="ConstantBuffer.h">
       <Filter>GameEngine\GraphicsEngine\ConstantBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Quads.h" />
-    <ClInclude Include="AGameObject.h" />
+    <ClInclude Include="Renderer.h">
+      <Filter>GameEngine\GraphicsEngine\RenderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="AGameObject.h">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Quads.h">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx">
