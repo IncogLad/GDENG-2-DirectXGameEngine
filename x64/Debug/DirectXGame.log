@@ -1,4 +1,3 @@
 ﻿  AppWindow.cpp
-  Renderer.cpp
-  Generating Code...
+C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(132,120): warning C4305: 'argument': truncation from 'double' to 'float'
   DirectXGame.vcxproj -> C:\Users\Vincent\source\repos\DirectXGame\x64\Debug\DirectXGame.exe

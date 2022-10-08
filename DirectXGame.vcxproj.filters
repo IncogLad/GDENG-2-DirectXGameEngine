@@ -81,7 +81,9 @@
     <ClCompile Include="Quads.cpp">
       <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
     </ClCompile>
-    <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>GameEngine\EngineTimeSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -120,7 +122,9 @@
     <ClInclude Include="Quads.h">
       <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
     </ClInclude>
-    <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="EngineTime.h">
+      <Filter>GameEngine\EngineTimeSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx">
@@ -131,6 +135,12 @@
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
       <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShaderAnim.hlsl">
+      <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShaderAnim.hlsl">
+      <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

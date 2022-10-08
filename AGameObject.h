@@ -8,6 +8,6 @@ public:
 	virtual void initialize();
 	virtual void destroy();
 
-	virtual void draw() ;
+	virtual void draw(VertexShader* m_vs, PixelShader* m_ps) ;
 };
 

@@ -17,9 +17,15 @@ struct vec3
 struct vertex
 {
 	vec3 position;
-	//vec3 position1;
 	vec3 color;
-	//vec3 color1;
+};
+
+struct vertexAnim
+{
+	vec3 position;
+	vec3 position1;
+	vec3 color;
+	vec3 color1;
 };
 
 
@@ -38,11 +44,18 @@ public:
 	void destroy() override;
 
 	void initBuffers(struct vertex list[], void* shader_byte_code, size_t size_shader);
-	void draw() override;
+	void initAnimBuffers(struct vertexAnim list[], void* shader_byte_code, size_t size_shader);
+	void initConstBuffers();
+	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
 	void releaseBuffers();
 
 private:
 	VertexBuffer* m_vb;
+	ConstantBuffer* m_cb;
+
+	constant cc;
+	double speed = 2;
+	bool decrease = false;
 
 	Quads(Quads const&) {}
 	Quads& operator=(Quads const&) {}

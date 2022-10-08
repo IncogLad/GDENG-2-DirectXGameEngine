@@ -1,5 +1,7 @@
 #include "EngineTime.h"
 
+EngineTime* EngineTime::sharedInstance = nullptr;
+
 void EngineTime::initialize()
 {
 	sharedInstance = new EngineTime();
@@ -30,5 +32,5 @@ void EngineTime::LogFrameEnd()
 
 	sharedInstance->deltaTime = elapsed_seconds.count();
 
-	std::cout << sharedInstance->deltaTime << std::endl;
+	//std::cout << sharedInstance->deltaTime << std::endl;
 }

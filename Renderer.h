@@ -22,6 +22,8 @@ public:
 	static void destroy();
 
 	void initializeQuads(struct vertex list[], void* shader_byte_code, size_t size_shader);
+	void initializeQuadsAnim(struct vertexAnim list[], void* shader_byte_code, size_t size_shader);
+	void initializeQuadConst();
 	void insertQuads(class Quads* quad);
 	void releaseQuads();
 	std::list<class Quads*> getQuadList();
