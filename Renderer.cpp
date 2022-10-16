@@ -1,4 +1,7 @@
 #include "Renderer.h"
+#include "AppWindow.h"
+#include "SwapChain.h"
+
 
 Renderer* Renderer::sharedInstance = nullptr;
 
@@ -46,7 +49,7 @@ void Renderer::initializeQuadConst()
 
 void Renderer::insertQuads(Quads* quad)
 {
-	vertexBufferList.push_front(quad);
+	quadList.push_front(quad);
 }
 
 void Renderer::releaseQuads()
@@ -56,8 +59,36 @@ void Renderer::releaseQuads()
 
 std::list<Quads*> Renderer::getQuadList()
 {
-	
-	return vertexBufferList;
+	return quadList;
+}
+
+void Renderer::initializeCube(void* shader_byte_code, size_t size_shader)
+{
+	Cube* cube = new Cube();
+	cube->initialize();
+	cube->initBuffers(shader_byte_code, size_shader);
+	insertCube(cube);
+}
+
+void Renderer::initializeCubeConst()
+{
+	for (auto const& i : sharedInstance->getCubeList()) {
+		i->initConstBuffers();
+	}
+}
+
+void Renderer::insertCube(Cube* cube)
+{
+	cubeList.push_front(cube);
+}
+
+void Renderer::releaseCubes()
+{
+}
+
+std::list<Cube*> Renderer::getCubeList()
+{
+	return cubeList;
 }
 
 Renderer::Renderer()

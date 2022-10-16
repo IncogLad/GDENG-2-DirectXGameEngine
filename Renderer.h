@@ -1,15 +1,8 @@
 #pragma once
 #include <list>
 
-#include "AppWindow.h"
-#include "GraphicsEngine.h"
-#include "SwapChain.h"
-#include "DeviceContext.h"
-#include "VertexBuffer.h"
-#include "ConstantBuffer.h"
-#include "VertexShader.h"
-#include "PixelShader.h"
 #include "Quads.h"
+#include "Cube.h"
 
 class Renderer
 {
@@ -27,10 +20,18 @@ public:
 	void insertQuads(class Quads* quad);
 	void releaseQuads();
 	std::list<class Quads*> getQuadList();
+
+	void initializeCube(void* shader_byte_code, size_t size_shader);
+	void initializeCubeConst();
+	void insertCube(class Cube* cube);
+	void releaseCubes();
+	std::list<class Cube*> getCubeList();
+
 	
 private:
 	static Renderer* sharedInstance;
-	std::list<class Quads*> vertexBufferList;
+	std::list<class Quads*> quadList;
+	std::list<class Cube*> cubeList;
 
 	Renderer(Renderer const&) {};
 	Renderer& operator=(Renderer const&) {};

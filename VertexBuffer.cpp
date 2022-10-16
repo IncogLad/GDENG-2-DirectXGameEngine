@@ -45,6 +45,14 @@ bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, v
 		{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 36,D3D11_INPUT_PER_VERTEX_DATA ,0 }
 	};
 
+	D3D11_INPUT_ELEMENT_DESC layout_cube[] =
+	{
+		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
+		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+		{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 }
+	};
+
 	/*FOR NO ANIMS*/
 	/*
 	UINT size_layout = ARRAYSIZE(layout);
@@ -57,9 +65,18 @@ bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, v
 
 
 	/*FOR ANIMS*/
+	/*
 	UINT size_layout = ARRAYSIZE(layout_anim);
 
 	if (FAILED(GraphicsEngine::getInstance()->m_d3d_device->CreateInputLayout(layout_anim, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
+	{
+		return false;
+	}
+	*/
+
+	UINT size_layout = ARRAYSIZE(layout_cube);
+
+	if (FAILED(GraphicsEngine::getInstance()->m_d3d_device->CreateInputLayout(layout_cube, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
 	{
 		return false;
 	}

@@ -40,6 +40,15 @@
     <Filter Include="GameEngine\EngineTimeSystem">
       <UniqueIdentifier>{d8ce9249-b631-4972-b619-12549e45bb17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Math">
+      <UniqueIdentifier>{a925408c-b6ef-4bbb-b7c6-8385236000aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\IndexBuffer">
+      <UniqueIdentifier>{399fec15-830a-4132-825d-1a182fcc3eca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\InputSystem">
+      <UniqueIdentifier>{a956f46a-d41d-4d1d-8cc5-ef808b903e50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -84,6 +93,15 @@
     <ClCompile Include="EngineTime.cpp">
       <Filter>GameEngine\EngineTimeSystem</Filter>
     </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>GameEngine\GraphicsEngine\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>GameEngine\InputSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -125,11 +143,29 @@
     <ClInclude Include="EngineTime.h">
       <Filter>GameEngine\EngineTimeSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>GameEngine\GraphicsEngine\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\PrimitiveObject</Filter>
+    </ClInclude>
+    <ClInclude Include="InputListener.h">
+      <Filter>GameEngine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>GameEngine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader.fx">
-      <Filter>GameEngine</Filter>
-    </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
       <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
     </FxCompile>
@@ -141,6 +177,9 @@
     </FxCompile>
     <FxCompile Include="VertexShaderAnim.hlsl">
       <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader.fx">
+      <Filter>GameEngine\GraphicsEngine</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -1,5 +1,10 @@
 #include "AppWindow.h"
 #include <Windows.h>
+#include "InputSystem.h"
+#include "DeviceContext.h"
+#include "EngineTime.h"
+#include "VertexShader.h"
+#include "PixelShader.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
 
@@ -34,7 +39,10 @@ AppWindow::~AppWindow()
 void AppWindow::onCreate()
 {
 	Window::onCreate();
+	InputSystem::initialize();
+	InputSystem::getInstance()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
+	
 
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	RECT rc = this->getClientWindowRect();
@@ -44,10 +52,10 @@ void AppWindow::onCreate()
 	vertexAnim list_anim[] =
 	{
 		//X - Y - Z
-		{-0.1f,-0.3f,0.0f,    -0.3f,-0.3f,0.0f,   1,1,0,  0,1,0 }, // POS1
-		{-0.1f,0.95f,0.0f,     -0.3f,0.5f,0.0f,    1,1,0,  0,1,1 },// POS2
-		{ 0.1f,-0.95f,0.0f,    0.3f,-0.5f,0.0f,   0,1,1,  1,0,0 },// POS2
-		{ 0.1f,0.5f,0.0f,      0.3f,0.5f,0.0f,    1,1,1,  0,0,1 }
+		{Vector3D ( - 0.1f,-0.3f,0.0f),    Vector3D(-0.3f,-0.3f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,0)}, // POS1
+		{Vector3D(-0.1f,0.95f,0.0f),     Vector3D(-0.3f,0.5f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,1 )},// POS2
+		{ Vector3D(0.1f,-0.95f,0.0f),    Vector3D(0.3f,-0.5f,0.0f),   Vector3D(0,1,1),  Vector3D(1,0,0 )},// POS2
+		{ Vector3D(0.1f,0.5f,0.0f),      Vector3D(0.3f,0.5f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1 )}
 		
 	};
 
@@ -55,46 +63,13 @@ void AppWindow::onCreate()
 	vertexAnim list_anim2[] =
 	{
 		//X - Y - Z
-		{-0.78f,-0.8f,0.0f,    -0.32f,-0.11f,0.0f,   0,0,0,  0,1,0 }, // POS1
-		{-0.9f,0.08f,0.0f,     -0.11f,0.78f,0.0f,    1,1,0,  0,1,1 }, // POS2
-		{ 0.1f,-0.2f,0.0f,     0.75f,-0.73f,0.0f,   0,0,1,  1,0,0 },// POS2
-		{ -0.05f,0.15f,0.0f,      0.88f,0.77f,0.0f,    1,1,1,  0,0,1 }
+		{Vector3D(-0.78f,-0.8f,0.0f),    Vector3D(-0.32f,-0.11f,0.0f),   Vector3D(0,0,0),  Vector3D(0,1,0) }, // POS1
+		{Vector3D(-0.9f,0.08f,0.0f),     Vector3D(-0.11f,0.78f,0.0f),    Vector3D(1,1,0),  Vector3D(0,1,1) }, // POS2
+		{ Vector3D(0.1f,-0.2f,0.0f),     Vector3D(0.75f,-0.73f,0.0f),   Vector3D(0,0,1),  Vector3D(1,0,0) },// POS2
+		{ Vector3D(-0.05f,0.15f,0.0f),      Vector3D(0.88f,0.77f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1) }
 
 	};
 
-	//SLIDE 14 CHALLENGE
-	vertexAnim list_anim3[] =
-	{
-		//X - Y - Z
-		{  -0.75f,-0.8f,0.0f,  -0.15f,-0.4f,0.0f,   0,0,0,  0,1,0 }, // POS1
-		{  -0.9f,-0.1f,0.0f, -0.05f,0.45f,0.0f,    1,1,0,  0,1,1 }, // POS2
-		{  0.85f,-0.55f,0.0f, 0.0f,-0.75f,0.0f,   0,0,1,  1,0,0 },// POS2
-		{  -0.75f,-0.8f,0.0f,  0.85f,0.4f,0.0f,     1,1,1,  0,0,1 }
-	};
-
-	vertex list1[] =
-	{
-		{-0.1f,-0.3f,0.0f,   1,1,0}, // POS1
-		{-0.1f,0.95f,0.0f,    1,0,0}, // POS2
-		{ 0.1f,-0.95f,0.0f,   0,0,1}, // POS3
-		{ 0.1f,0.5f,0.0f,    0,1,0.4f}
-	};
-
-	vertex list2[] =
-	{
-		{-0.9f,-0.9f,0.0f,   1,0,0}, // POS1
-		{-0.9f,0.9f,0.0f,    0,1,0}, // POS2
-		{ -0.3f,-0.9f,0.0f,   0,0,1}, // POS3
-		{ -0.3f,0.9f,0.0f,    1,1,0}
-	};
-
-	vertex list3[] =
-	{
-		{0.3f,-0.6f,0.0f,   1,1,0}, 
-		{0.3f,0.7f,0.0f,    0,1,1}, 
-		{ 0.6f,-0.9f,0.0f,   0,0,1}, 
-		{ 0.9f,0.8f,0.0f,    1,0.3f,0.4f}
-	};
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
@@ -103,11 +78,12 @@ void AppWindow::onCreate()
 
 	m_vs = GraphicsEngine::getInstance()->createVertexShader(shader_byte_code, size_shader);
 
-	Renderer::getInstance()->initializeQuadsAnim(list_anim2, shader_byte_code, size_shader);
+	//Renderer::getInstance()->initializeQuadsAnim(list_anim2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuadsAnim(list_anim2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuadsAnim(list_anim3, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list3, shader_byte_code, size_shader);
+	Renderer::getInstance()->initializeCube(shader_byte_code, size_shader);
 
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 
@@ -116,7 +92,8 @@ void AppWindow::onCreate()
 	m_ps = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 
-	Renderer::getInstance()->initializeQuadConst();
+	//Renderer::getInstance()->initializeQuadConst();
+	Renderer::getInstance()->initializeCubeConst();
 	/*
 	constant cc;
 	cc.m_angle = 0;
@@ -128,6 +105,8 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
+
+	InputSystem::getInstance()->update();
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,0.3, 0.3, 0.3, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
@@ -135,6 +114,10 @@ void AppWindow::onUpdate()
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 	for (auto const& i : Renderer::getInstance()->getQuadList()) {
+		i->draw(m_vs, m_ps);
+	}
+
+	for (auto const& i : Renderer::getInstance()->getCubeList()) {
 		i->draw(m_vs, m_ps);
 	}
 	
@@ -178,6 +161,7 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
+	InputSystem::destroy();
 	//m_vb->release();
 	m_swap_chain->release();
 	m_vs->release();
@@ -189,3 +173,53 @@ void AppWindow::onDestroy()
 
 }
 
+void AppWindow::onKeyDown(int key)
+{
+	if (key == 'W')
+	{
+		m_rot_x += 3.14f * EngineTime::getDeltaTime();
+	}
+	else if (key == 'S')
+	{
+		m_rot_x -= 3.14f * EngineTime::getDeltaTime();
+	}
+	else if (key == 'A')
+	{
+		m_rot_y += 3.14f * EngineTime::getDeltaTime();
+	}
+	else if (key == 'D')
+	{
+		m_rot_y -= 3.14f * EngineTime::getDeltaTime();
+	}
+}
+
+void AppWindow::onKeyUp(int key)
+{
+
+}
+
+void AppWindow::onMouseMove(const Point& delta_mouse_pos)
+{
+	m_rot_x -= delta_mouse_pos.m_y * EngineTime::getDeltaTime();
+	m_rot_y -= delta_mouse_pos.m_x * EngineTime::getDeltaTime();
+}
+
+void AppWindow::onLeftMouseDown(const Point& mouse_pos)
+{
+	m_scale_cube = 0.5f;
+}
+
+void AppWindow::onLeftMouseUp(const Point& mouse_pos)
+{
+	m_scale_cube = 1.0f;
+}
+
+void AppWindow::onRightMouseDown(const Point& mouse_pos)
+{
+	m_scale_cube = 2.0f;
+}
+
+void AppWindow::onRightMouseUp(const Point& mouse_pos)
+{
+	m_scale_cube = 1.0f;
+}
