@@ -23,6 +23,9 @@ public:
 	virtual void onUpdate();
 	virtual void onDestroy();
 
+	virtual void onFocus();
+	virtual void onKillFocus();
+
 
 	~Window();
 protected:

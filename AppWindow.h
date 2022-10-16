@@ -19,6 +19,8 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
+	virtual void onFocus() override;
+	virtual void onKillFocus() override;
 
 	virtual void onKeyDown(int key) override;
 	virtual void onKeyUp(int key) override;
@@ -42,4 +44,9 @@ private:
 	float m_rot_y = 0.0f;
 
 	float m_scale_cube;
+
+	constant cc;
+	Matrix4x4 m_world_cam;
+	float m_forward = 0.0f;
+	float m_rightward = 0.0f;
 };

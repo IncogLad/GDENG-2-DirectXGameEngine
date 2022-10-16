@@ -1,6 +1,8 @@
 #include "Renderer.h"
 #include "AppWindow.h"
 #include "SwapChain.h"
+#include <cstdlib>
+#include <random>
 
 
 Renderer* Renderer::sharedInstance = nullptr;
@@ -62,11 +64,24 @@ std::list<Quads*> Renderer::getQuadList()
 	return quadList;
 }
 
-void Renderer::initializeCube(void* shader_byte_code, size_t size_shader)
+void Renderer::initializeCube(void* shader_byte_code, size_t size_shader, int num = 0)
 {
+	std::random_device rd; // obtain a random number from hardware
+	std::mt19937 gen(rd()); // seed the generator
+	std::uniform_real_distribution<> distr(-0.75, 0.75); // define the range
+
 	Cube* cube = new Cube();
 	cube->initialize();
-	cube->initBuffers(shader_byte_code, size_shader);
+	cube->initBuffers(shader_byte_code, size_shader, num);
+
+	float x = distr(gen);
+	float y = distr(gen);
+	Vector3D rot = Vector3D(distr(gen), distr(gen), distr(gen));
+	if(num == 0)
+		cube->setInitTransforms(Vector3D(0, 0, 0.0f), rot);
+	else
+		cube->setInitTransforms(Vector3D(0, 0, 0.0f), Vector3D(0, 0, 0));
+	
 	insertCube(cube);
 }
 
