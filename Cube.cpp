@@ -26,29 +26,54 @@ void Cube::destroy()
 	AGameObject::destroy();
 }
 
-void Cube::initBuffers(void* shader_byte_code, size_t size_shader)
+void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
 {
+	this->num = num;
 	vertexCube vertex_list[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1,0,0),  Vector3D(0.2f,0,0) },
-		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(1,1,0), Vector3D(0.2f,0.2f,0) },
-		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(1,1,0),  Vector3D(0.2f,0.2f,0) },
-		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(1,0,0), Vector3D(0.2f,0,0) },
+		{Vector3D(-0.25f,-0.25f,-0.25f),    Vector3D(1,0,0),  Vector3D(0.2f,0,0) },
+		{Vector3D(-0.25f,0.25f,-0.25f),    Vector3D(1,1,0), Vector3D(0.2f,0.2f,0) },
+		{ Vector3D(0.25f,0.25f,-0.25f),   Vector3D(1,1,0),  Vector3D(0.2f,0.2f,0) },
+		{ Vector3D(0.25f,-0.25f,-0.25f),     Vector3D(1,0,0), Vector3D(0.2f,0,0) },
 
 		//BACK FACE
-		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(0,1,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(0,1,1),  Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(0,1,0), Vector3D(0,0.2f,0) }
+		{ Vector3D(0.25f,-0.25f,0.25f),    Vector3D(0,1,0), Vector3D(0,0.2f,0) },
+		{ Vector3D(0.25f,0.25f,0.25f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
+		{ Vector3D(-0.25f,0.25f,0.25f),   Vector3D(0,1,1),  Vector3D(0,0.2f,0.2f) },
+		{ Vector3D(-0.25f,-0.25f,0.25f),     Vector3D(0,1,0), Vector3D(0,0.2f,0) }
+
+	};
+
+	vertexCube plane_vertex_list[] =
+	{
+		//X - Y - Z
+		//FRONT FACE
+		{Vector3D(-1.0f,0.0f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-1.0f,0.0f,-1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(1.0f,.0f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(1.0f,0.0f,-1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
+
+		//BACK FACE
+		{ Vector3D(1.0f,0.0f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(1.0f,0.0f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(-1.0f,0.0f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(-1.0f,0.0f,1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
 
 	};
 
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
-	UINT size_list = ARRAYSIZE(vertex_list);
-	//std::cout << list->position.m_x << std::endl;
-	m_vb->load(vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+	if (this->num == 0) {
+		UINT size_list = ARRAYSIZE(vertex_list);
+		//std::cout << list->position.m_x << std::endl;
+		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+	}
+	else {
+		UINT size_list = ARRAYSIZE(plane_vertex_list);
+		//std::cout << list->position.m_x << std::endl;
+		m_vb->load(plane_vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+	}
 
 	unsigned int index_list[] =
 	{
@@ -117,9 +142,10 @@ void Cube::releaseBuffers()
 
 void Cube::updatePosition()
 {
+	
 	Matrix4x4 temp;
 	
-	m_delta_scale += EngineTime::getDeltaTime() / 0.55f;
+	/*m_delta_scale += EngineTime::getDeltaTime() / 0.55f;
 
 	cc.m_world.setScale(Vector3D(1, 1, 1));
 
@@ -142,8 +168,51 @@ void Cube::updatePosition()
 		(AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top) / 400.0f,
 		-4.0f,
 		4.0f
-	);
+	);*/
+	
+		cc.m_world.setIdentity();
 
+		Matrix4x4 world_cam;
+		world_cam.setIdentity();
+
+		temp.setIdentity();
+		temp.setRotationX(AppWindow::getInstance()->m_rot_x);
+		world_cam *= temp;
+
+		temp.setIdentity();
+		temp.setRotationY(AppWindow::getInstance()->m_rot_y);
+		world_cam *= temp;
+
+
+		Vector3D new_pos = AppWindow::getInstance()->m_world_cam.getTranslation() + world_cam.getZDirection() * (AppWindow::getInstance()->m_forward * 0.1f);
+
+		new_pos = new_pos + world_cam.getXDirection() * (AppWindow::getInstance()->m_rightward * 0.1f);
+
+		world_cam.setTranslation(new_pos);
+
+		AppWindow::getInstance()->m_world_cam = world_cam;
+
+
+		world_cam.inverse();
+
+
+
+
+		cc.m_view = world_cam;
+		/*cc.m_proj.setOrthoLH
+		(
+			(this->getClientWindowRect().right - this->getClientWindowRect().left)/300.0f,
+			(this->getClientWindowRect().bottom - this->getClientWindowRect().top)/300.0f,
+			-4.0f,
+			4.0f
+		);*/
+
+		int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+		int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+
+
+		cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
+	
 
 	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
 }

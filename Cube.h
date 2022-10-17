@@ -14,7 +14,7 @@ public:
 	void initialize() override;
 	void destroy() override;
 
-	void initBuffers(void* shader_byte_code, size_t size_shader);
+	void initBuffers(void* shader_byte_code, size_t size_shader, int num );
 	void initConstBuffers();
 	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
 	void releaseBuffers();
@@ -32,6 +32,8 @@ private:
 
 	float m_delta_pos;
 	float m_delta_scale;
+
+	int num = 0;
 
 	Cube(Cube const&) {}
 	Cube& operator=(Cube const&) {}

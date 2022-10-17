@@ -21,7 +21,7 @@ public:
 	void releaseQuads();
 	std::list<class Quads*> getQuadList();
 
-	void initializeCube(void* shader_byte_code, size_t size_shader);
+	void initializeCube(void* shader_byte_code, size_t size_shader, int num );
 	void initializeCubeConst();
 	void insertCube(class Cube* cube);
 	void releaseCubes();

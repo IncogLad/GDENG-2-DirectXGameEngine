@@ -39,14 +39,15 @@ AppWindow::~AppWindow()
 void AppWindow::onCreate()
 {
 	Window::onCreate();
-	InputSystem::initialize();
-	InputSystem::getInstance()->addListener(this);
+	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
 	
 
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+
+	m_world_cam.setTranslation(Vector3D(0, 0, -2));
 
 	Renderer::initialize();
 	vertexAnim list_anim[] =
@@ -83,7 +84,8 @@ void AppWindow::onCreate()
 	//Renderer::getInstance()->initializeQuadsAnim(list_anim3, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list3, shader_byte_code, size_shader);
-	Renderer::getInstance()->initializeCube(shader_byte_code, size_shader);
+	Renderer::getInstance()->initializeCube(shader_byte_code, size_shader, 0);
+	Renderer::getInstance()->initializeCube(shader_byte_code, size_shader, 1);
 
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 
@@ -106,7 +108,7 @@ void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 
-	InputSystem::getInstance()->update();
+	InputSystem::get()->update();
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,0.3, 0.3, 0.3, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
@@ -123,85 +125,73 @@ void AppWindow::onUpdate()
 	
 	m_swap_chain->present(true);
 
-	/*
-	 FOR ANIMATION - PART 9
-	unsigned long new_time = 0;
-	if (m_old_time)
-		new_time = ::GetTickCount() - m_old_time;
-	m_delta_time = new_time / 1000.0f;
-	m_old_time = ::GetTickCount();
-
-	m_angle += 1.57f * m_delta_time;
-	constant cc;
-	cc.m_angle = m_angle;
-	
-	
-	
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
-	*/
-
-	
-	
-	/*
-	 //SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(m_ps);
-	
-	 IN QUADS DRAW FUNC
-	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
-
-	// FINALLY DRAW THE TRIANGLE
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
-	*/
-	
 }
 
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
-	InputSystem::destroy();
-	//m_vb->release();
 	m_swap_chain->release();
 	m_vs->release();
 	m_ps->release();
-
-	//Renderer::destroy();
-
 	GraphicsEngine::getInstance()->release();
 
+}
+
+void AppWindow::onFocus()
+{
+	InputSystem::get()->addListener(this);
+}
+
+void AppWindow::onKillFocus()
+{
+	InputSystem::get()->removeListener(this);
 }
 
 void AppWindow::onKeyDown(int key)
 {
 	if (key == 'W')
 	{
-		m_rot_x += 3.14f * EngineTime::getDeltaTime();
+		//m_rot_x += 3.14f*m_delta_time;
+		m_forward = 1.0f;
 	}
 	else if (key == 'S')
 	{
-		m_rot_x -= 3.14f * EngineTime::getDeltaTime();
+		//m_rot_x -= 3.14f*m_delta_time;
+		m_forward = -1.0f;
 	}
 	else if (key == 'A')
 	{
-		m_rot_y += 3.14f * EngineTime::getDeltaTime();
+		//m_rot_y += 3.14f*m_delta_time;
+		m_rightward = -1.0f;
 	}
 	else if (key == 'D')
 	{
-		m_rot_y -= 3.14f * EngineTime::getDeltaTime();
+		//m_rot_y -= 3.14f*m_delta_time;
+		m_rightward = 1.0f;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
 {
-
+	m_forward = 0.0f;
+	m_rightward = 0.0f;
 }
 
-void AppWindow::onMouseMove(const Point& delta_mouse_pos)
+void AppWindow::onMouseMove(const Point& mouse_pos)
 {
-	m_rot_x -= delta_mouse_pos.m_y * EngineTime::getDeltaTime();
-	m_rot_y -= delta_mouse_pos.m_x * EngineTime::getDeltaTime();
+	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
+	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
+
+
+
+	m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+	m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+
+
+
+	InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
+
+
 }
 
 void AppWindow::onLeftMouseDown(const Point& mouse_pos)

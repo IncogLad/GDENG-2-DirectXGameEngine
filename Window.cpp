@@ -151,6 +151,14 @@ void Window::onDestroy()
 	m_is_run = false;
 }
 
+void Window::onFocus()
+{
+}
+
+void Window::onKillFocus()
+{
+}
+
 Window::~Window()
 {
 }

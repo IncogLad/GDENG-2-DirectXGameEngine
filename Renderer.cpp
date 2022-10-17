@@ -62,11 +62,11 @@ std::list<Quads*> Renderer::getQuadList()
 	return quadList;
 }
 
-void Renderer::initializeCube(void* shader_byte_code, size_t size_shader)
+void Renderer::initializeCube(void* shader_byte_code, size_t size_shader, int num = 0)
 {
 	Cube* cube = new Cube();
 	cube->initialize();
-	cube->initBuffers(shader_byte_code, size_shader);
+	cube->initBuffers(shader_byte_code, size_shader, num);
 	insertCube(cube);
 }
 
