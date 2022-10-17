@@ -1,9 +1,19 @@
-﻿  AppWindow.cpp
+﻿  Camera.cpp
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(40,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(41,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(42,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(43,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(48,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(49,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(50,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(51,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(56,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(57,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(58,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(59,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(113,120): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(187,76): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(188,75): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(148,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   DirectXGame.vcxproj -> C:\Users\Vincent\source\repos\DirectXGame\x64\Debug\DirectXGame.exe
