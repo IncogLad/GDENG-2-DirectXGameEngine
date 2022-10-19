@@ -8,6 +8,7 @@ class ConstantBuffer;
 class VertexShader;
 class PixelShader;
 class IndexBuffer;
+class UISystem;
 
 class GraphicsEngine
 {
@@ -65,4 +66,5 @@ private:
 	friend class VertexShader;
 	friend class PixelShader;
 	friend class IndexBuffer;
+	friend class UISystem;
 };

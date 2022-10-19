@@ -5,6 +5,7 @@
 #include "EngineTime.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "UISystem.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
 
@@ -41,7 +42,8 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
-	
+	UISystem::getInstance()->initialize();
+	UISystem::getInstance()->initImGUI(this->m_hwnd);
 
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	RECT rc = this->getClientWindowRect();
@@ -109,6 +111,7 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	InputSystem::get()->update();
+	UISystem::getInstance()->update();
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,0.3, 0.3, 0.3, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
@@ -134,6 +137,7 @@ void AppWindow::onDestroy()
 	m_vs->release();
 	m_ps->release();
 	GraphicsEngine::getInstance()->release();
+	UISystem::getInstance()->destroy();
 
 }
 
