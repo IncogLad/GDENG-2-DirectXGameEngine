@@ -98,12 +98,7 @@ void AppWindow::onCreate()
 
 	//Renderer::getInstance()->initializeQuadConst();
 	Renderer::getInstance()->initializeCubeConst();
-	/*
-	constant cc;
-	cc.m_angle = 0;
-	m_cb = GraphicsEngine::getInstance()->createConstantBuffer();
-	m_cb->load(&cc, sizeof(constant));
-	*/
+	
 }
 
 void AppWindow::onUpdate()
@@ -111,9 +106,12 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	InputSystem::get()->update();
-	UISystem::getInstance()->update();
+	
+	UISystem::getInstance()->updateNewFrame();
+
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,0.3, 0.3, 0.3, 1);
+
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
@@ -125,7 +123,9 @@ void AppWindow::onUpdate()
 	for (auto const& i : Renderer::getInstance()->getCubeList()) {
 		i->draw(m_vs, m_ps);
 	}
-	
+
+	UISystem::getInstance()->update(this->m_swap_chain);
+
 	m_swap_chain->present(true);
 
 }

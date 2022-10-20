@@ -138,6 +138,9 @@
     <ClCompile Include="UISystem.cpp">
       <Filter>GameEngine\UISystem</Filter>
     </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>GameEngine\UISystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -231,6 +234,9 @@
       <Filter>GameEngine\ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="UISystem.h">
+      <Filter>GameEngine\UISystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
       <Filter>GameEngine\UISystem</Filter>
     </ClInclude>
   </ItemGroup>

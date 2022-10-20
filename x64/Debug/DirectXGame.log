@@ -1,13 +1,2 @@
-﻿  AppWindow.cpp
-C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(116,120): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(191,76): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\AppWindow.cpp(192,75): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-  UISystem.cpp
-  VertexBuffer.cpp
-  VertexShader.cpp
-  Generating Code...
+﻿  Window.cpp
   DirectXGame.vcxproj -> C:\Users\Vincent\source\repos\DirectXGame\x64\Debug\DirectXGame.exe

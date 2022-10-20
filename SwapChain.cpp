@@ -1,5 +1,6 @@
 #include "SwapChain.h"
 #include "GraphicsEngine.h"
+#include <iostream>
 
 SwapChain::SwapChain()
 {
@@ -49,7 +50,7 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 		return false;
 	}
 
-
+	//DSV CREATION
 	D3D11_TEXTURE2D_DESC descDepth;
 	descDepth.Width = width;
 	descDepth.Height = height;
@@ -64,10 +65,35 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	descDepth.MiscFlags = 0;
 	hr = device->CreateTexture2D(&descDepth, NULL, &buffer);
 
-	
 	device->CreateDepthStencilView(buffer, NULL, &m_dsv);
 	buffer->Release();
 
+
+	//SRV CREATION
+	D3D11_TEXTURE2D_DESC srDesc;
+	ZeroMemory(&srDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	srDesc.Width = width;
+	srDesc.Height = height;
+	srDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	srDesc.Usage = D3D11_USAGE_DEFAULT;
+	srDesc.SampleDesc.Count = 1;
+	srDesc.SampleDesc.Quality = 0;
+	srDesc.CPUAccessFlags = 0;
+	srDesc.ArraySize = 1;
+	srDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	srDesc.MiscFlags = 0;
+	srDesc.MipLevels = 1;
+
+	hr = device->CreateTexture2D(&srDesc, NULL, &buffer);
+		
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	srvDesc.Format = srDesc.Format;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+	srvDesc.Texture2D.MipLevels = 1;
+
+	device->CreateShaderResourceView(buffer, &srvDesc, &m_srv);
+	buffer->Release();
 
 	return true;
 }
@@ -84,6 +110,11 @@ bool SwapChain::release()
 	m_swap_chain->Release();
 	delete this;
 	return true;
+}
+
+ID3D11ShaderResourceView* SwapChain::getShaderResourceView()
+{
+	return this->m_srv;
 }
 
 SwapChain::~SwapChain()

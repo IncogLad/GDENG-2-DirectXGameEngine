@@ -1,5 +1,7 @@
 #pragma once
 #include <d3d11.h>
+#include <list>
+#include "Viewport.h"
 
 class UISystem
 {
@@ -11,11 +13,13 @@ public:
 	static UISystem* getInstance();
 	static void destroy();
 
-	void update();
+	void updateNewFrame();
+	void update(SwapChain* swapChain);
 	void initImGUI(HWND hwnd);
 
 private:
 	static UISystem* sharedInstance;
+	std::list<Viewport*> viewportList;
 	bool show_demo_window = true;
 };
 
