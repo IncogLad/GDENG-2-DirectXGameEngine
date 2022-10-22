@@ -21,6 +21,7 @@ private:
 	ID3D11RenderTargetView* m_rtv;
 	ID3D11DepthStencilView* m_dsv;
 	ID3D11ShaderResourceView* m_srv;
+	ID3D11BlendState* m_bs;
 private:
 	friend class DeviceContext;
 };

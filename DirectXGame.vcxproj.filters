@@ -58,6 +58,9 @@
     <Filter Include="GameEngine\UISystem">
       <UniqueIdentifier>{23ee5a11-08d8-455b-a5f5-082f6cc2aef1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\RenderToTexture">
+      <UniqueIdentifier>{45f89b5e-a328-4c6d-b972-e47f420978f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>GameEngine\UISystem</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTexture.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderToTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>GameEngine\UISystem</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTexture.h">
+      <Filter>GameEngine\GraphicsEngine\RenderToTexture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

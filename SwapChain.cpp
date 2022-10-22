@@ -9,7 +9,7 @@ SwapChain::SwapChain()
 bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 {
 	ID3D11Device* device = GraphicsEngine::getInstance()->m_d3d_device;
-
+	
 	DXGI_SWAP_CHAIN_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
 	desc.BufferCount = 1;
@@ -43,12 +43,12 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	}
 
 	hr = device->CreateRenderTargetView(buffer, NULL, &m_rtv);
-	buffer->Release();
-
+	
 	if (FAILED(hr))
 	{
 		return false;
 	}
+	buffer->Release();
 
 	//DSV CREATION
 	D3D11_TEXTURE2D_DESC descDepth;
@@ -68,32 +68,37 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	device->CreateDepthStencilView(buffer, NULL, &m_dsv);
 	buffer->Release();
 
-
+	/*
 	//SRV CREATION
-	D3D11_TEXTURE2D_DESC srDesc;
-	ZeroMemory(&srDesc, sizeof(D3D11_TEXTURE2D_DESC));
-	srDesc.Width = width;
-	srDesc.Height = height;
-	srDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-	srDesc.Usage = D3D11_USAGE_DEFAULT;
-	srDesc.SampleDesc.Count = 1;
-	srDesc.SampleDesc.Quality = 0;
-	srDesc.CPUAccessFlags = 0;
-	srDesc.ArraySize = 1;
-	srDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-	srDesc.MiscFlags = 0;
-	srDesc.MipLevels = 1;
+	D3D11_TEXTURE2D_DESC texDesc;
+	ZeroMemory(&texDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	texDesc.Width = width;
+	texDesc.Height = height;
+	texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.SampleDesc.Count = 1;
+	texDesc.SampleDesc.Quality = 0;
+	texDesc.CPUAccessFlags = 0;
+	texDesc.ArraySize = 1;
+	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	texDesc.MiscFlags = 0;
+	texDesc.MipLevels = 1;
 
-	hr = device->CreateTexture2D(&srDesc, NULL, &buffer);
-		
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
-	srvDesc.Format = srDesc.Format;
+	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	srvDesc.Texture2D.MipLevels = 1;
 
 	device->CreateShaderResourceView(buffer, &srvDesc, &m_srv);
 	buffer->Release();
+	*/
+
+	D3D11_BLEND_DESC blend_desc;
+	blend_desc.IndependentBlendEnable = TRUE;
+
+	device->CreateBlendState(&blend_desc, &m_bs);
+	
 
 	return true;
 }

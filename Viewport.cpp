@@ -28,7 +28,9 @@ void Viewport::update(const char* name)
         ImGui::Begin(name);
         ImGui::Text("%s", name);
 
-        //ImGui::Image();
+        
+
+        ImGui::Image(swapChain->getShaderResourceView(), ImVec2(500, 500));
 
         ImGui::Text("%s", name);
         ImGui::End();
