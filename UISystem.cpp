@@ -45,6 +45,10 @@ void UISystem::initImGUI(HWND hwnd)
 
     ImGui_ImplWin32_Init(hwnd);
     ImGui_ImplDX11_Init(GraphicsEngine::getInstance()->m_d3d_device, GraphicsEngine::getInstance()->m_imm_context);
+
+    Viewport* viewport = new Viewport();
+    viewport->initialize();
+    sharedInstance->viewportList.push_back(viewport);
 }
 
 void UISystem::updateNewFrame()
@@ -71,7 +75,7 @@ void UISystem::update(SwapChain* swapChain)
         char* s = name;
         //create_window(s);
         Viewport* viewport = new Viewport();
-        viewport->initialize(swapChain);
+        viewport->initialize();
         sharedInstance->viewportList.push_back(viewport);
     }
     ImGui::End();

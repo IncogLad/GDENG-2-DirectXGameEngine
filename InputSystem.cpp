@@ -14,7 +14,7 @@ InputSystem::~InputSystem()
 void InputSystem::update()
 {
 	POINT current_mouse_pos = {};
-	//::GetCursorPos(&current_mouse_pos);
+	::GetCursorPos(&current_mouse_pos);
 
 	if (m_first_time)
 	{

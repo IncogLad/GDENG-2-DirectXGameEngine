@@ -1,4 +1,7 @@
 #include "Viewport.h"
+
+#include "GraphicsEngine.h"
+#include "RenderTexture.h"
 #include "UISystem.h"
 #include "imgui\imgui.h"
 #include "imgui\imgui_impl_win32.h"
@@ -12,9 +15,9 @@ Viewport::~Viewport()
 {
 }
 
-void Viewport::initialize(SwapChain* swap_chain)
+void Viewport::initialize()
 {
-    this->swapChain = swap_chain;
+   
 }
 
 void Viewport::destroy()
@@ -24,17 +27,16 @@ void Viewport::destroy()
 
 void Viewport::update(const char* name)
 {
-    if (swapChain != NULL) {
         ImGui::Begin(name);
         ImGui::Text("%s", name);
 
         
 
-        ImGui::Image(swapChain->getShaderResourceView(), ImVec2(500, 500));
+        ImGui::Image(GraphicsEngine::getInstance()->getRenderedTexture()->GetShaderResourceView(), ImVec2(500, 500));
 
         ImGui::Text("%s", name);
         ImGui::End();
-    }
+    
     
 }
 

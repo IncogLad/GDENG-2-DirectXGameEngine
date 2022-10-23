@@ -8,7 +8,7 @@ public:
 	Viewport();
 	~Viewport();
 
-	void initialize(SwapChain* swap_chain);
+	void initialize();
 	void destroy();
 	void update(const char* name);
 

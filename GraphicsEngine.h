@@ -9,6 +9,7 @@ class VertexShader;
 class PixelShader;
 class IndexBuffer;
 class UISystem;
+class RenderTexture;
 
 class GraphicsEngine
 {
@@ -29,18 +30,26 @@ public:
 	IndexBuffer* createIndexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
 	PixelShader* createPixelShader(const void* shader_byte_code, size_t byte_code_size);
+	bool createRenderTexture(int textureWidth, int textureHeight);
+	
 public:
 	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 	bool compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 
 	void releaseCompiledShader();
 
+	void RenderToTexture(SwapChain* swap_chain);
+	void SetBackBufferRenderTarget(SwapChain* swap_chain);
+
+	RenderTexture* getRenderedTexture();
+	
 public:
 	static GraphicsEngine* getInstance();
 
 private:
 	static GraphicsEngine* sharedInstance;
 	DeviceContext* m_imm_device_context;
+	RenderTexture* m_RenderTexture;
 private:
 	ID3D11Device* m_d3d_device;
 	D3D_FEATURE_LEVEL m_feature_level;
@@ -52,8 +61,6 @@ private:
 
 private:
 	ID3DBlob* m_blob = nullptr;
-
-
 
 	ID3DBlob* m_vsblob = nullptr;
 	ID3DBlob* m_psblob = nullptr;
@@ -67,4 +74,5 @@ private:
 	friend class PixelShader;
 	friend class IndexBuffer;
 	friend class UISystem;
+	friend class RenderTexture;
 };

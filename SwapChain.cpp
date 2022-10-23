@@ -9,6 +9,7 @@ SwapChain::SwapChain()
 bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 {
 	ID3D11Device* device = GraphicsEngine::getInstance()->m_d3d_device;
+	ID3D11DeviceContext* context = GraphicsEngine::getInstance()->m_imm_context;
 	
 	DXGI_SWAP_CHAIN_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
@@ -63,41 +64,43 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
-	hr = device->CreateTexture2D(&descDepth, NULL, &buffer);
+	hr = device->CreateTexture2D(&descDepth, NULL, &m_depthStencilBuffer);
 
-	device->CreateDepthStencilView(buffer, NULL, &m_dsv);
-	buffer->Release();
+	device->CreateDepthStencilView(m_depthStencilBuffer, NULL, &m_dsv);
+	// Bind the render target view and depth stencil buffer to the output render pipeline.
+	context->OMSetRenderTargets(1, &m_rtv, m_dsv);
 
-	/*
-	//SRV CREATION
-	D3D11_TEXTURE2D_DESC texDesc;
-	ZeroMemory(&texDesc, sizeof(D3D11_TEXTURE2D_DESC));
-	texDesc.Width = width;
-	texDesc.Height = height;
-	texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.SampleDesc.Count = 1;
-	texDesc.SampleDesc.Quality = 0;
-	texDesc.CPUAccessFlags = 0;
-	texDesc.ArraySize = 1;
-	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-	texDesc.MiscFlags = 0;
-	texDesc.MipLevels = 1;
+	
+	D3D11_BLEND_DESC blendStateDescription;
+	// Clear the blend state description.
+	ZeroMemory(&blendStateDescription, sizeof(D3D11_BLEND_DESC));
 
-	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MostDetailedMip = 0;
-	srvDesc.Texture2D.MipLevels = 1;
+	// Create an alpha enabled blend state description.
+	blendStateDescription.RenderTarget[0].BlendEnable = TRUE;
+	blendStateDescription.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	blendStateDescription.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendStateDescription.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendStateDescription.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendStateDescription.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendStateDescription.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 0x0f;
 
-	device->CreateShaderResourceView(buffer, &srvDesc, &m_srv);
-	buffer->Release();
-	*/
+	// Create the blend state using the description.
+	hr = device->CreateBlendState(&blendStateDescription, &m_alphaEnableBlendingState);
+	if (FAILED(hr))
+	{
+		return false;
+	}
 
-	D3D11_BLEND_DESC blend_desc;
-	blend_desc.IndependentBlendEnable = TRUE;
+	// Modify the description to create an alpha disabled blend state description.
+	blendStateDescription.RenderTarget[0].BlendEnable = FALSE;
 
-	device->CreateBlendState(&blend_desc, &m_bs);
+	// Create the blend state using the description.
+	hr = device->CreateBlendState(&blendStateDescription, &m_alphaDisableBlendingState);
+	if (FAILED(hr))
+	{
+		return false;
+	}
 	
 
 	return true;
@@ -117,9 +120,14 @@ bool SwapChain::release()
 	return true;
 }
 
-ID3D11ShaderResourceView* SwapChain::getShaderResourceView()
+ID3D11DepthStencilView* SwapChain::getDepthStencilView()
 {
-	return this->m_srv;
+	return this->m_dsv;
+}
+
+ID3D11RenderTargetView* SwapChain::getRenderTargetView()
+{
+	return this->m_rtv;
 }
 
 SwapChain::~SwapChain()

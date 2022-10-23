@@ -42,6 +42,7 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
+	
 	UISystem::getInstance()->initialize();
 	UISystem::getInstance()->initImGUI(this->m_hwnd);
 
@@ -52,6 +53,8 @@ void AppWindow::onCreate()
 	m_world_cam.setTranslation(Vector3D(0, 0, -2));
 
 	Renderer::initialize();
+
+	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
 	vertexAnim list_anim[] =
 	{
 		//X - Y - Z
@@ -104,10 +107,19 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
-
 	InputSystem::get()->update();
-	
-	UISystem::getInstance()->updateNewFrame();
+
+	GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
+	//Render Everything
+	for (auto const& i : Renderer::getInstance()->getQuadList()) {
+		i->draw(m_vs, m_ps);
+	}
+
+	for (auto const& i : Renderer::getInstance()->getCubeList()) {
+		i->draw(m_vs, m_ps);
+	}
+
+	GraphicsEngine::getInstance()->SetBackBufferRenderTarget(this->m_swap_chain);
 
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,0.3, 0.3, 0.3, 1);
@@ -115,6 +127,8 @@ void AppWindow::onUpdate()
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+
+	UISystem::getInstance()->updateNewFrame();
 
 	for (auto const& i : Renderer::getInstance()->getQuadList()) {
 		i->draw(m_vs, m_ps);
