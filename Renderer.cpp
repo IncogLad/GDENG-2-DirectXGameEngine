@@ -24,18 +24,18 @@ void Renderer::destroy()
     
 }
 
-void Renderer::initializeQuads(vertex list[], void* shader_byte_code, size_t size_shader)
+void Renderer::initializeQuads(std::string name, vertex list[], void* shader_byte_code, size_t size_shader)
 {
 	Quads* tempQuad = new Quads();
-	tempQuad->initialize();
+	tempQuad->initialize(name);
 	tempQuad->initBuffers(list, shader_byte_code, size_shader);
 	insertQuads(tempQuad);
 }
 
-void Renderer::initializeQuadsAnim(vertexAnim list[], void* shader_byte_code, size_t size_shader)
+void Renderer::initializeQuadsAnim(std::string name, vertexAnim list[], void* shader_byte_code, size_t size_shader)
 {
 	Quads* tempQuad = new Quads();
-	tempQuad->initialize();
+	tempQuad->initialize(name);
 	tempQuad->initAnimBuffers(list, shader_byte_code, size_shader);
 	insertQuads(tempQuad);
 }
@@ -62,10 +62,10 @@ std::list<Quads*> Renderer::getQuadList()
 	return quadList;
 }
 
-void Renderer::initializeCube(void* shader_byte_code, size_t size_shader, int num = 0)
+void Renderer::initializeCube(std::string name, void* shader_byte_code, size_t size_shader, int num = 0)
 {
 	Cube* cube = new Cube();
-	cube->initialize();
+	cube->initialize(name);
 	cube->initBuffers(shader_byte_code, size_shader, num);
 	insertCube(cube);
 }

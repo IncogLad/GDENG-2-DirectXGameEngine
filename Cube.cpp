@@ -7,6 +7,7 @@
 #include "EngineTime.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
+#include "SceneCameraHandler.h"
 
 Cube::Cube()
 {
@@ -16,9 +17,9 @@ Cube::~Cube()
 {
 }
 
-void Cube::initialize()
+void Cube::initialize(std::string name)
 {
-	AGameObject::initialize();
+	AGameObject::initialize(name);
 }
 
 void Cube::destroy()
@@ -142,77 +143,45 @@ void Cube::releaseBuffers()
 
 void Cube::updatePosition()
 {
+	//WORLD MATRIX
+	cc.m_world.setIdentity();
+	Matrix4x4 allMatrix; allMatrix.setIdentity();
+
+	Vector3D moveX = Vector3D(AppWindow::getInstance()->move_cube, 0, 0);
+	this->setPosition(moveX);
 	
-	Matrix4x4 temp;
-	
-	/*m_delta_scale += EngineTime::getDeltaTime() / 0.55f;
+	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
+	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
+	Vector3D rotation = getLocalRotation();
 
-	cc.m_world.setScale(Vector3D(1, 1, 1));
+	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
+	w_zMatrix.setRotationZ(rotation.m_z);
+	allMatrix *= w_zMatrix;
 
-	temp.setIdentity();
-	temp.setRotationZ(m_delta_scale);
-	cc.m_world *= temp;
+	Matrix4x4 w_xMatrix; w_xMatrix.setIdentity();
+	w_xMatrix.setRotationX(rotation.m_x);
+	allMatrix *= w_xMatrix;
 
-	temp.setIdentity();
-	temp.setRotationY(m_delta_scale);
-	cc.m_world *= temp;
+	Matrix4x4 w_yMatrix; w_yMatrix.setIdentity();
+	w_yMatrix.setRotationY(rotation.m_y);
+	allMatrix *= w_yMatrix;
 
-	temp.setIdentity();
-	temp.setRotationX(m_delta_scale);
-	cc.m_world *= temp;
+	//scaleMatrix *= rotMatrix;
+	allMatrix *= scaleMatrix;
+	allMatrix *= translationMatrix;
+	cc.m_world = allMatrix;
 
+	//VIEW MATRIX
 	cc.m_view.setIdentity();
-	cc.m_proj.setOrthoLH
-	(
-		(AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left) / 400.0f,
-		(AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top) / 400.0f,
-		-4.0f,
-		4.0f
-	);*/
+	cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
 	
-		cc.m_world.setIdentity();
+	//PROJ MATRIX
+	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+	int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
 
-		Matrix4x4 world_cam;
-		world_cam.setIdentity();
-
-		temp.setIdentity();
-		temp.setRotationX(AppWindow::getInstance()->m_rot_x);
-		world_cam *= temp;
-
-		temp.setIdentity();
-		temp.setRotationY(AppWindow::getInstance()->m_rot_y);
-		world_cam *= temp;
-
-
-		Vector3D new_pos = AppWindow::getInstance()->m_world_cam.getTranslation() + world_cam.getZDirection() * (AppWindow::getInstance()->m_forward * 0.1f);
-
-		new_pos = new_pos + world_cam.getXDirection() * (AppWindow::getInstance()->m_rightward * 0.1f);
-
-		world_cam.setTranslation(new_pos);
-
-		AppWindow::getInstance()->m_world_cam = world_cam;
-
-
-		world_cam.inverse();
-
-
-
-
-		cc.m_view = world_cam;
-		/*cc.m_proj.setOrthoLH
-		(
-			(this->getClientWindowRect().right - this->getClientWindowRect().left)/300.0f,
-			(this->getClientWindowRect().bottom - this->getClientWindowRect().top)/300.0f,
-			-4.0f,
-			4.0f
-		);*/
-
-		int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
-		int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
-
-
-		cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
-	
+	//cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
+	cc.m_proj.setPerspectiveFovLH(1.57, ((float)width / (float)height), 0.1f, 1000.0f);
 
 	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
+	
 }

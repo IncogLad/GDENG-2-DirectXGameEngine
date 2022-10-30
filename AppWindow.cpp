@@ -5,6 +5,7 @@
 #include "EngineTime.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "SceneCameraHandler.h"
 #include "UISystem.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
@@ -42,6 +43,7 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
+	SceneCameraHandler::getInstance()->initialize();
 	
 	UISystem::getInstance()->initialize();
 	UISystem::getInstance()->initImGUI(this->m_hwnd);
@@ -50,7 +52,7 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	m_world_cam.setTranslation(Vector3D(0, 0, -2));
+	//m_world_cam.setTranslation(Vector3D(0, 0, -2));
 
 	Renderer::initialize();
 
@@ -89,8 +91,8 @@ void AppWindow::onCreate()
 	//Renderer::getInstance()->initializeQuadsAnim(list_anim3, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list3, shader_byte_code, size_shader);
-	Renderer::getInstance()->initializeCube(shader_byte_code, size_shader, 0);
-	Renderer::getInstance()->initializeCube(shader_byte_code, size_shader, 1);
+	Renderer::getInstance()->initializeCube("0", shader_byte_code, size_shader, 0);
+	Renderer::getInstance()->initializeCube("1", shader_byte_code, size_shader, 1);
 
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 
@@ -107,9 +109,11 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
-	InputSystem::get()->update();
 
+	InputSystem::get()->update();
+	SceneCameraHandler::getInstance()->update();
 	GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
+
 	//Render Everything
 	for (auto const& i : Renderer::getInstance()->getQuadList()) {
 		i->draw(m_vs, m_ps);
@@ -118,7 +122,7 @@ void AppWindow::onUpdate()
 	for (auto const& i : Renderer::getInstance()->getCubeList()) {
 		i->draw(m_vs, m_ps);
 	}
-
+	
 	GraphicsEngine::getInstance()->SetBackBufferRenderTarget(this->m_swap_chain);
 
 	//CLEAR THE RENDER TARGET 
@@ -170,34 +174,34 @@ void AppWindow::onKeyDown(int key)
 	if (key == 'W')
 	{
 		//m_rot_x += 3.14f*m_delta_time;
-		m_forward = 1.0f;
+		//m_forward = 1.0f;
 	}
 	else if (key == 'S')
 	{
 		//m_rot_x -= 3.14f*m_delta_time;
-		m_forward = -1.0f;
+		//m_forward = -1.0f;
 	}
 	else if (key == 'A')
 	{
 		//m_rot_y += 3.14f*m_delta_time;
-		m_rightward = -1.0f;
+		//m_rightward = -1.0f;
 	}
 	else if (key == 'D')
 	{
 		//m_rot_y -= 3.14f*m_delta_time;
-		m_rightward = 1.0f;
+		//m_rightward = 1.0f;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
 {
-	m_forward = 0.0f;
-	m_rightward = 0.0f;
+	//m_forward = 0.0f;
+	//m_rightward = 0.0f;
 }
 
 void AppWindow::onMouseMove(const Point& mouse_pos)
 {
-	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
+	/*int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
 	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
 
 
@@ -207,27 +211,27 @@ void AppWindow::onMouseMove(const Point& mouse_pos)
 
 
 
-	InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
+	InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));*/
 
 
 }
 
 void AppWindow::onLeftMouseDown(const Point& mouse_pos)
 {
-	m_scale_cube = 0.5f;
+	move_cube = 1.0f;
 }
 
 void AppWindow::onLeftMouseUp(const Point& mouse_pos)
 {
-	m_scale_cube = 1.0f;
+	move_cube = 0.0f;
 }
 
 void AppWindow::onRightMouseDown(const Point& mouse_pos)
 {
-	m_scale_cube = 2.0f;
+	move_cube = -1.0f;
 }
 
 void AppWindow::onRightMouseUp(const Point& mouse_pos)
 {
-	m_scale_cube = 1.0f;
+	move_cube = 0.0f;
 }

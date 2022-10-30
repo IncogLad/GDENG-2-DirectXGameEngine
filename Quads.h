@@ -11,7 +11,7 @@ public:
 	Quads();
 	~Quads();
 
-	void initialize() override;
+	void initialize(std::string name) override;
 	void destroy() override;
 
 	void initBuffers(struct vertex list[], void* shader_byte_code, size_t size_shader);

@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "AppWindow.h"
+#include "EngineTime.h"
+#include "InputSystem.h"
 
 Camera::Camera()
 {
@@ -9,10 +11,13 @@ Camera::~Camera()
 {
 }
 
-void Camera::initialize()
+void Camera::initialize(std::string name)
 {
-	AGameObject::initialize();
-	m_world_cam.setTranslation(Vector3D(0, 0, -2));
+	AGameObject::initialize(name);
+	InputSystem::get()->addListener(this);
+	this->worldCam.setIdentity();
+	this->worldCam.setTranslation(Vector3D(0, 0, -2));
+	//camPos.zeros();
 }
 
 void Camera::destroy()
@@ -25,53 +30,95 @@ void Camera::draw(VertexShader* m_vs, PixelShader* m_ps)
 
 }
 
-void Camera::update(ConstantBuffer* m_cb)
+void Camera::update(float deltaTime)
 {
-	Matrix4x4 temp;
-	cc.m_world.setIdentity();
-
-	Matrix4x4 world_cam;
-	world_cam.setIdentity();
+	Matrix4x4 temp; temp.setIdentity();
 
 	temp.setIdentity();
-	temp.setRotationX(AppWindow::getInstance()->m_rot_x);
-	world_cam *= temp;
 
-	temp.setIdentity();
-	temp.setRotationY(AppWindow::getInstance()->m_rot_y);
-	world_cam *= temp;
+	Matrix4x4 xMatrix; xMatrix.setIdentity();
+	xMatrix.setRotationX(this->m_rot_x);
+	temp *= xMatrix;
+
+	Matrix4x4 yMatrix; yMatrix.setIdentity();
+	yMatrix.setRotationY(this->m_rot_y);
+	temp *= yMatrix;
 
 
-	Vector3D new_pos = AppWindow::getInstance()->m_world_cam.getTranslation() + world_cam.getZDirection() * (AppWindow::getInstance()->m_forward * 0.1f);
+	Vector3D new_pos = worldCam.getTranslation() + temp.getZDirection() * (m_forward * deltaTime * 1.5f);
+	new_pos = new_pos + temp.getXDirection() * (m_rightward * deltaTime * 1.5f);
+	temp.setTranslation(new_pos);
 
-	new_pos = new_pos + world_cam.getXDirection() * (AppWindow::getInstance()->m_rightward * 0.1f);
+	worldCam = temp;
 
-	world_cam.setTranslation(new_pos);
+	temp.inverse();
+	this->localMatrix = temp;
+	
+}
 
-	AppWindow::getInstance()->m_world_cam = world_cam;
+Matrix4x4 Camera::getViewMatrix()
+{
+	return this->localMatrix;
+}
 
-	world_cam.inverse();
 
-	cc.m_view = world_cam;
-	/*cc.m_proj.setOrthoLH
-	(
-		(this->getClientWindowRect().right - this->getClientWindowRect().left)/300.0f,
-		(this->getClientWindowRect().bottom - this->getClientWindowRect().top)/300.0f,
-		-4.0f,
-		4.0f
-	);*/
+void Camera::onKeyDown(int key)
+{
+	if (key == 'W')
+	{
+		this->m_forward = 1.0f;
+		std::cout << "W pressed" << std::endl;
+		
+	}
+	else if (key == 'S')
+	{
+		this->m_forward = -1.0f;
+		std::cout << "S pressed" << std::endl;
+	}
+	else if (key == 'A')
+	{
+		this->m_rightward = -1.0f;
+		std::cout << "A pressed" << std::endl;
+	}
+	else if (key == 'D')
+	{
+		this->m_rightward = 1.0f;
+		std::cout << "D pressed" << std::endl;
+	}
+}
+
+void Camera::onKeyUp(int key)
+{
+	this->m_forward = 0.0f;
+	this->m_rightward = 0.0f;
+}
+
+void Camera::onMouseMove(const Point& mouse_pos)
+{
 
 	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
 	int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
 
+	m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+	m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
 
-	cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
+	InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
 
-
-	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
 }
 
-void Camera::updatePosition()
+void Camera::onLeftMouseDown(const Point& mouse_pos)
 {
 
+}
+
+void Camera::onLeftMouseUp(const Point& mouse_pos)
+{
+}
+
+void Camera::onRightMouseDown(const Point& mouse_pos)
+{
+}
+
+void Camera::onRightMouseUp(const Point& mouse_pos)
+{
 }

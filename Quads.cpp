@@ -16,9 +16,9 @@ Quads::~Quads()
 {
 }
 
-void Quads::initialize()
+void Quads::initialize(std::string name)
 {
-	AGameObject::initialize();
+	AGameObject::initialize(name);
 }
 
 void Quads::destroy()

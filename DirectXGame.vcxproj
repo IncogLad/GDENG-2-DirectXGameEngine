@@ -154,6 +154,7 @@
     <ClCompile Include="Quads.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
+    <ClCompile Include="SceneCameraHandler.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Quads.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderTexture.h" />
+    <ClInclude Include="SceneCameraHandler.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="Vector3D.h" />

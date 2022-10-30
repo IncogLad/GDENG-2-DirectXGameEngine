@@ -32,28 +32,13 @@ public:
 	virtual void onRightMouseDown(const Point& mouse_pos) override;
 	virtual void onRightMouseUp(const Point& mouse_pos) override;
 
-
-	float m_rot_x = 0.0f;
-	float m_rot_y = 0.0f;
-
-	float m_forward = 0.0f;
-	float m_rightward = 0.0f;
-	Matrix4x4 m_world_cam;
+	float move_cube = 0.0f;
 
 private:
 	static AppWindow* sharedInstance;
-
+	
 	SwapChain* m_swap_chain;
 	VertexShader* m_vs;
 	PixelShader* m_ps;
-
-	float m_delta_pos;
-	float m_delta_scale;
-	float m_delta_rot;
-
-
-
-	float m_scale_cube = 1;
-
-
+	
 };

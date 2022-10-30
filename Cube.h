@@ -11,7 +11,7 @@ public:
 	Cube();
 	~Cube();
 
-	void initialize() override;
+	void initialize(std::string name) override;
 	void destroy() override;
 
 	void initBuffers(void* shader_byte_code, size_t size_shader, int num );
@@ -27,11 +27,7 @@ private:
 	IndexBuffer* m_ib;
 
 	constant cc;
-	double speed = 2;
-	bool decrease = false;
 
-	float m_delta_pos;
-	float m_delta_scale;
 
 	int num = 0;
 

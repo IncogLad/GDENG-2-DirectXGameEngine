@@ -67,7 +67,6 @@ void UISystem::update(SwapChain* swapChain)
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-    
 
     ImGui::Begin("make window");
     static char name[32] = "nice";

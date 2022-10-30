@@ -32,12 +32,24 @@ public:
 		return Vector3D(m_x + vec.m_x, m_y + vec.m_y, m_z + vec.m_z);
 	}
 
-
-
 	~Vector3D()
 	{
 	}
 
+	static Vector3D zeros();
+	static Vector3D ones();
+
 public:
 	float m_x, m_y, m_z;
 };
+
+
+inline Vector3D Vector3D::zeros()
+{
+	return Vector3D(0.f, 0.f, 0.f);
+}
+
+inline Vector3D Vector3D::ones()
+{
+	return Vector3D(1.f, 1.f, 1.f);
+}

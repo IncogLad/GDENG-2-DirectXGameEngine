@@ -248,7 +248,7 @@ void GraphicsEngine::RenderToTexture(SwapChain* swap_chain)
 	m_RenderTexture->SetRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView());
 
 	// Clear the render to texture.
-	m_RenderTexture->ClearRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView(), 0.0f, 0.0f, 1.0f, 1.0f);
+	m_RenderTexture->ClearRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView(), 0.0f, 1.0f, 0.0f, 1.0f);
 
 	// Render the scene now and it will draw to the render to texture instead of the back buffer.
 	//result = RenderScene();
@@ -270,43 +270,6 @@ RenderTexture* GraphicsEngine::getRenderedTexture()
 	return this->m_RenderTexture;
 }
 
-//bool GraphicsEngine::RenderScene()
-//{
-	//D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix;
-	//bool result;
-	//static float rotation = 0.0f;
 
-
-	//// Generate the view matrix based on the camera's position.
-	//m_Camera->Render();
-
-	//// Get the world, view, and projection matrices from the camera and d3d objects.
-	//m_D3D->GetWorldMatrix(worldMatrix);
-	//m_Camera->GetViewMatrix(viewMatrix);
-	//m_D3D->GetProjectionMatrix(projectionMatrix);
-
-	//// Update the rotation variable each frame.
-	//rotation += (float)D3DX_PI * 0.005f;
-	//if (rotation > 360.0f)
-	//{
-	//	rotation -= 360.0f;
-	//}
-
-	//// Multiply the world matrix by the rotation.
-	//D3DXMatrixRotationY(&worldMatrix, rotation);
-
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//m_Model->Render(m_D3D->GetDeviceContext());
-
-	//// Render the model with the light shader.
-	//result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-	//	m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor());
-	//if (!result)
-	//{
-	//	return false;
-	//}
-
-	//return true;
-//}
 
 

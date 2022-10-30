@@ -11,8 +11,6 @@ public:
 	void initialize();
 	void destroy();
 	void update(const char* name);
-
-
 private:
-	SwapChain* swapChain;
+
 };
