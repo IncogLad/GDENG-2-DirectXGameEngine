@@ -57,27 +57,6 @@ void AppWindow::onCreate()
 	Renderer::initialize();
 
 	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
-	vertexAnim list_anim[] =
-	{
-		//X - Y - Z
-		{Vector3D ( - 0.1f,-0.3f,0.0f),    Vector3D(-0.3f,-0.3f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,0)}, // POS1
-		{Vector3D(-0.1f,0.95f,0.0f),     Vector3D(-0.3f,0.5f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,1 )},// POS2
-		{ Vector3D(0.1f,-0.95f,0.0f),    Vector3D(0.3f,-0.5f,0.0f),   Vector3D(0,1,1),  Vector3D(1,0,0 )},// POS2
-		{ Vector3D(0.1f,0.5f,0.0f),      Vector3D(0.3f,0.5f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1 )}
-		
-	};
-
-	//SLIDE 13 CHALLENGE
-	vertexAnim list_anim2[] =
-	{
-		//X - Y - Z
-		{Vector3D(-0.78f,-0.8f,0.0f),    Vector3D(-0.32f,-0.11f,0.0f),   Vector3D(0,0,0),  Vector3D(0,1,0) }, // POS1
-		{Vector3D(-0.9f,0.08f,0.0f),     Vector3D(-0.11f,0.78f,0.0f),    Vector3D(1,1,0),  Vector3D(0,1,1) }, // POS2
-		{ Vector3D(0.1f,-0.2f,0.0f),     Vector3D(0.75f,-0.73f,0.0f),   Vector3D(0,0,1),  Vector3D(1,0,0) },// POS2
-		{ Vector3D(-0.05f,0.15f,0.0f),      Vector3D(0.88f,0.77f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1) }
-
-	};
-
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
@@ -86,13 +65,25 @@ void AppWindow::onCreate()
 
 	m_vs = GraphicsEngine::getInstance()->createVertexShader(shader_byte_code, size_shader);
 
-	//Renderer::getInstance()->initializeQuadsAnim(list_anim2, shader_byte_code, size_shader);
+	//Renderer::getInstance()->initializeQuadsAnim("1", shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuadsAnim(list_anim2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuadsAnim(list_anim3, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list2, shader_byte_code, size_shader);
 	//Renderer::getInstance()->initializeQuads(list3, shader_byte_code, size_shader);
-	Renderer::getInstance()->initializeCube("0", shader_byte_code, size_shader, 0);
-	Renderer::getInstance()->initializeCube("1", shader_byte_code, size_shader, 1);
+	Renderer::getInstance()->initializeCube("cube0", shader_byte_code, size_shader, 0);
+	Renderer::getInstance()->initializeCube("cube1", shader_byte_code, size_shader, 0);
+	Renderer::getInstance()->initializeCube("cube2", shader_byte_code, size_shader, 0);
+
+	Renderer::getInstance()->initializeCube("plane", shader_byte_code, size_shader, 1);
+	/*for (int i = 0; i < 15; i++)
+	{
+		Renderer::getInstance()->initializeCube("card" + i, shader_byte_code, size_shader, 1);
+	}*/
+
+	/*for (int i = 0; i < 50; i++)
+	{
+		Renderer::getInstance()->initializeCube("0", shader_byte_code, size_shader, 0);
+	}*/
 
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 
@@ -101,7 +92,7 @@ void AppWindow::onCreate()
 	m_ps = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 
-	//Renderer::getInstance()->initializeQuadConst();
+	Renderer::getInstance()->initializeQuadConst();
 	Renderer::getInstance()->initializeCubeConst();
 	
 }
@@ -112,6 +103,7 @@ void AppWindow::onUpdate()
 
 	InputSystem::get()->update();
 	SceneCameraHandler::getInstance()->update();
+	//////////////RENDER TO TEXTURE///////////////////
 	GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
 
 	//Render Everything
@@ -124,6 +116,7 @@ void AppWindow::onUpdate()
 	}
 	
 	GraphicsEngine::getInstance()->SetBackBufferRenderTarget(this->m_swap_chain);
+	////////////////////////////////////////////////
 
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,0.3, 0.3, 0.3, 1);

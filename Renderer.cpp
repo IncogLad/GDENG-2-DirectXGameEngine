@@ -24,19 +24,19 @@ void Renderer::destroy()
     
 }
 
-void Renderer::initializeQuads(std::string name, vertex list[], void* shader_byte_code, size_t size_shader)
+void Renderer::initializeQuads(std::string name, void* shader_byte_code, size_t size_shader)
 {
 	Quads* tempQuad = new Quads();
 	tempQuad->initialize(name);
-	tempQuad->initBuffers(list, shader_byte_code, size_shader);
+	tempQuad->initBuffers(shader_byte_code, size_shader);
 	insertQuads(tempQuad);
 }
 
-void Renderer::initializeQuadsAnim(std::string name, vertexAnim list[], void* shader_byte_code, size_t size_shader)
+void Renderer::initializeQuadsAnim(std::string name, void* shader_byte_code, size_t size_shader)
 {
 	Quads* tempQuad = new Quads();
 	tempQuad->initialize(name);
-	tempQuad->initAnimBuffers(list, shader_byte_code, size_shader);
+	tempQuad->initAnimBuffers(shader_byte_code, size_shader);
 	insertQuads(tempQuad);
 }
 
@@ -72,8 +72,90 @@ void Renderer::initializeCube(std::string name, void* shader_byte_code, size_t s
 
 void Renderer::initializeCubeConst()
 {
+	int num = 0;
+	/*float p_secondLevel = 0.85f;
+	float p_thirdLevel = 2.45f;
+	float s_secondLevel = 1.6f;
+	float s_thirdLevel = 3.2f;
+
+	float tempx = 0;
+	float tempy = 0;
+	float tempx2 = 1;
+	float tempx3 = 2;
+
+	Vector3D rightSlant = Vector3D(0, 0, 45);
+	Vector3D leftSlant = Vector3D(0, 0, -45);*/
+
 	for (auto const& i : sharedInstance->getCubeList()) {
 		i->initConstBuffers();
+		
+
+		//no7
+		/*i->setScale(1, 1, 0.75f);
+
+		Vector3D temp = Vector3D(tempx + num, tempy, 0);
+		i->setPosition(temp);
+
+		if (num == 0 || num == 2 || num == 4 || num == 8 || num == 10 || num == 13) 
+		{
+			i->setRotation(rightSlant);
+			if (num == 8)
+			{
+				Vector3D temp = Vector3D(tempx2 + 0, tempy + s_secondLevel, 0);
+				i->setPosition(temp);
+			}
+			if (num == 10)
+			{
+				Vector3D temp = Vector3D(tempx2 + 2, tempy + s_secondLevel, 0);
+				i->setPosition(temp);
+			}
+			if (num == 13)
+			{
+				Vector3D temp = Vector3D(tempx3 + 0, tempy + s_thirdLevel, 0);
+				i->setPosition(temp);
+			}
+		}
+		if (num == 1 || num == 3 || num == 5 || num == 9 || num == 11 || num == 14)
+		{
+			i->setRotation(leftSlant);
+			if (num == 9)
+			{
+				Vector3D temp = Vector3D(tempx2 + 1, tempy + s_secondLevel, 0);
+				i->setPosition(temp);
+			}
+			if (num == 11)
+			{
+				Vector3D temp = Vector3D(tempx2 + 3, tempy + s_secondLevel, 0);
+				i->setPosition(temp);
+			}
+			if (num == 14)
+			{
+				Vector3D temp = Vector3D(tempx3 + 1, tempy + s_thirdLevel, 0);
+				i->setPosition(temp);
+			}
+		}
+		if (num == 6 || num == 7 || num == 12)
+		{
+			i->setRotation(Vector3D::zeros());
+			i->setScale(1.5f, 1, 0.75f);
+
+			if (num == 6) {
+				Vector3D temp = Vector3D(tempx + 1.5f, tempy + p_secondLevel, 0);
+				i->setPosition(temp);
+			}
+			if (num == 7)
+			{
+				Vector3D temp = Vector3D(tempx + 3.5f, tempy + p_secondLevel, 0);
+				i->setPosition(temp);
+			}
+			if (num == 12)
+			{
+				Vector3D temp = Vector3D(tempx + 2.5f, tempy + p_thirdLevel, 0);
+				i->setPosition(temp);
+			}
+		}*/
+
+		num++;
 	}
 }
 

@@ -29,6 +29,16 @@ private:
 	constant cc;
 
 
+	//no.2
+	Vector3D rotation;
+
+	//no.3
+	Vector3D translation;
+	Vector3D scaling;
+	bool i_trans;
+	bool i_scale;
+
+
 	int num = 0;
 
 	Cube(Cube const&) {}

@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "DeviceContext.h"
 #include "ConstantBuffer.h"
+#include "SceneCameraHandler.h"
 #include "VertexBuffer.h"
 
 
@@ -26,20 +27,58 @@ void Quads::destroy()
 	AGameObject::destroy();
 }
 
-void Quads::initBuffers(vertex list[], void* shader_byte_code, size_t size_shader)
+void Quads::initBuffers(void* shader_byte_code, size_t size_shader)
 {
+	vertexAnim list_anim[] =
+	{
+		//X - Y - Z
+		{Vector3D(-0.1f,-0.3f,0.0f),    Vector3D(-0.3f,-0.3f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,0)}, // POS1
+		{Vector3D(-0.1f,0.95f,0.0f),     Vector3D(-0.3f,0.5f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,1)},// POS2
+		{ Vector3D(0.1f,-0.95f,0.0f),    Vector3D(0.3f,-0.5f,0.0f),   Vector3D(0,1,1),  Vector3D(1,0,0)},// POS2
+		{ Vector3D(0.1f,0.5f,0.0f),      Vector3D(0.3f,0.5f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1)}
+
+	};
+
+	//SLIDE 13 CHALLENGE
+	vertexAnim list_anim2[] =
+	{
+		//X - Y - Z
+		{Vector3D(-0.78f,-0.8f,0.0f),    Vector3D(-0.32f,-0.11f,0.0f),   Vector3D(0,0,0),  Vector3D(0,1,0) }, // POS1
+		{Vector3D(-0.9f,0.08f,0.0f),     Vector3D(-0.11f,0.78f,0.0f),    Vector3D(1,1,0),  Vector3D(0,1,1) }, // POS2
+		{ Vector3D(0.1f,-0.2f,0.0f),     Vector3D(0.75f,-0.73f,0.0f),   Vector3D(0,0,1),  Vector3D(1,0,0) },// POS2
+		{ Vector3D(-0.05f,0.15f,0.0f),      Vector3D(0.88f,0.77f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1) }
+
+	};
+
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
-	//UINT size_list = ARRAYSIZE(list);
-	//std::cout << list->position.m_x << std::endl;
-	m_vb->load(list, sizeof(vertex), 4, shader_byte_code, size_shader);
+	m_vb->load(list_anim, sizeof(vertex), 4, shader_byte_code, size_shader);
 }
 
-void Quads::initAnimBuffers(vertexAnim listAnim[], void* shader_byte_code, size_t size_shader)
+void Quads::initAnimBuffers(void* shader_byte_code, size_t size_shader)
 {
+	vertexAnim list_anim[] =
+	{
+		//X - Y - Z
+		{Vector3D(-0.1f,-0.3f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,0)}, // POS1
+		{Vector3D(-0.1f,0.95f,0.0f),   Vector3D(1,1,0),  Vector3D(0,1,1)},// POS2
+		{Vector3D(0.1f,-0.95f,0.0f),   Vector3D(0,1,1),  Vector3D(1,0,0)},// POS2
+		{Vector3D(0.1f,0.5f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1)}
+
+	};
+
+	//SLIDE 13 CHALLENGE
+	vertexAnim list_anim2[] =
+	{
+		//X - Y - Z
+		{Vector3D(-0.78f,-0.8f,0.0f),    Vector3D(-0.32f,-0.11f,0.0f),   Vector3D(0,0,0),  Vector3D(0,1,0) }, // POS1
+		{Vector3D(-0.9f,0.08f,0.0f),     Vector3D(-0.11f,0.78f,0.0f),    Vector3D(1,1,0),  Vector3D(0,1,1) }, // POS2
+		{ Vector3D(0.1f,-0.2f,0.0f),     Vector3D(0.75f,-0.73f,0.0f),   Vector3D(0,0,1),  Vector3D(1,0,0) },// POS2
+		{ Vector3D(-0.05f,0.15f,0.0f),      Vector3D(0.88f,0.77f,0.0f),    Vector3D(1,1,1),  Vector3D(0,0,1) }
+
+	};
+
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
-	//UINT size_list = ARRAYSIZE(list);
-	//std::cout << listAnim->position.m_x << std::endl;
-	m_vb->load(listAnim, sizeof(vertexAnim), 4, shader_byte_code, size_shader);
+	m_vb->load(list_anim, sizeof(vertexAnim), 4, shader_byte_code, size_shader);
 }
 
 void Quads::initConstBuffers()
@@ -91,28 +130,44 @@ void Quads::releaseBuffers()
 
 void Quads::updatePosition()
 {
-	Matrix4x4 temp;
+	//WORLD MATRIX
+	cc.m_world.setIdentity();
+	Matrix4x4 allMatrix; allMatrix.setIdentity();
 
-	m_delta_pos += EngineTime::getDeltaTime() / 4.0f;
-	if (m_delta_pos > 1.0f)
-	{
-		m_delta_pos = 0.0f;
-	}
-	m_delta_scale += EngineTime::getDeltaTime() * 5.0f;
+	//Vector3D moveX = Vector3D(AppWindow::getInstance()->move_cube, 0, 0);
+	//this->setPosition(moveX);
 
-	cc.m_world.setScale(Vector3D::lerp(Vector3D(0.5, 0.5, 0), Vector3D(1.0f, 1.0f, 0), (sin(m_delta_scale) + 1.0f) / 2.0f));
-	temp.setTranslation(Vector3D::lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_delta_pos));
-	cc.m_world *= temp;
+	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
+	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
+	Vector3D rotation = getLocalRotation();
 
+	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
+	w_zMatrix.setRotationZ(rotation.m_z);
+	allMatrix *= w_zMatrix;
+
+	Matrix4x4 w_xMatrix; w_xMatrix.setIdentity();
+	w_xMatrix.setRotationX(rotation.m_x);
+	allMatrix *= w_xMatrix;
+
+	Matrix4x4 w_yMatrix; w_yMatrix.setIdentity();
+	w_yMatrix.setRotationY(rotation.m_y);
+	allMatrix *= w_yMatrix;
+
+	//scaleMatrix *= rotMatrix;
+	allMatrix *= scaleMatrix;
+	allMatrix *= translationMatrix;
+	cc.m_world = allMatrix;
+
+	//VIEW MATRIX
 	cc.m_view.setIdentity();
-	cc.m_proj.setOrthoLH
-	(
-		(AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left) / 400.0f,
-		(AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top) / 400.0f,
-		-4.0f,
-		4.0f
-	);
+	cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
 
+	//PROJ MATRIX
+	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+	int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+
+	//cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
+	cc.m_proj.setPerspectiveFovLH(1.57, ((float)width / (float)height), 0.1f, 1000.0f);
 
 	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
 

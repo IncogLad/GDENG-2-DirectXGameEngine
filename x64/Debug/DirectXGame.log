@@ -3,5 +3,5 @@ C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(103,44): warning C4244: '=
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Vincent\source\repos\DirectXGame\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Vincent\source\repos\DirectXGame\Cube.cpp(183,83): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Vincent\source\repos\DirectXGame\Cube.cpp(323,83): warning C4305: 'argument': truncation from 'double' to 'float'
   DirectXGame.vcxproj -> C:\Users\Vincent\source\repos\DirectXGame\x64\Debug\DirectXGame.exe

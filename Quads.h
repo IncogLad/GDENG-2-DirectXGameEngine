@@ -14,8 +14,8 @@ public:
 	void initialize(std::string name) override;
 	void destroy() override;
 
-	void initBuffers(struct vertex list[], void* shader_byte_code, size_t size_shader);
-	void initAnimBuffers(struct vertexAnim list[], void* shader_byte_code, size_t size_shader);
+	void initBuffers(void* shader_byte_code, size_t size_shader);
+	void initAnimBuffers(void* shader_byte_code, size_t size_shader);
 	void initConstBuffers();
 	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
 	void releaseBuffers();

@@ -66,10 +66,10 @@ void UISystem::update(SwapChain* swapChain)
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
-
-
+	static char name[32] = "nice";
+    /*
     ImGui::Begin("make window");
-    static char name[32] = "nice";
+    
     if (ImGui::Button("create window")) {
         char* s = name;
         //create_window(s);
@@ -78,7 +78,7 @@ void UISystem::update(SwapChain* swapChain)
         sharedInstance->viewportList.push_back(viewport);
     }
     ImGui::End();
-
+    */
     for (auto const& i : viewportList) {
         i->update(name);
     }

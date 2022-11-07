@@ -25,7 +25,7 @@ void GraphicsEngine::initialize()
 
 void GraphicsEngine::destroy()
 {
-	if (sharedInstance!=NULL)
+	if (sharedInstance != NULL)
 	{
 		sharedInstance->release();
 	}
@@ -57,7 +57,7 @@ bool GraphicsEngine::init()
 	for (UINT driver_type_index = 0; driver_type_index < num_driver_types;)
 	{
 		res = D3D11CreateDevice(NULL, driver_types[driver_type_index], NULL, NULL, feature_levels,
-			num_feature_levels, D3D11_SDK_VERSION, &m_d3d_device, &m_feature_level, &m_imm_context);
+		                        num_feature_levels, D3D11_SDK_VERSION, &m_d3d_device, &m_feature_level, &m_imm_context);
 		if (SUCCEEDED(res))
 			break;
 		++driver_type_index;
@@ -73,7 +73,6 @@ bool GraphicsEngine::init()
 	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
 
-	
 
 	return true;
 }
@@ -155,7 +154,7 @@ PixelShader* GraphicsEngine::createPixelShader(const void* shader_byte_code, siz
 	return ps;
 }
 
-bool GraphicsEngine::createRenderTexture( int textureWidth, int textureHeight)
+bool GraphicsEngine::createRenderTexture(int textureWidth, int textureHeight)
 {
 	bool result;
 	this->m_RenderTexture = new RenderTexture();
@@ -169,10 +168,12 @@ bool GraphicsEngine::createRenderTexture( int textureWidth, int textureHeight)
 	return result;
 }
 
-bool GraphicsEngine::compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
+bool GraphicsEngine::compileVertexShader(const wchar_t* file_name, const char* entry_point_name,
+                                         void** shader_byte_code, size_t* byte_code_size)
 {
 	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &m_blob, &error_blob)))
+	if (!SUCCEEDED(
+		D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &m_blob, &error_blob)))
 	{
 		if (error_blob) error_blob->Release();
 		return false;
@@ -184,10 +185,12 @@ bool GraphicsEngine::compileVertexShader(const wchar_t* file_name, const char* e
 	return true;
 }
 
-bool GraphicsEngine::compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
+bool GraphicsEngine::compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code,
+                                        size_t* byte_code_size)
 {
 	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "ps_5_0", 0, 0, &m_blob, &error_blob)))
+	if (!SUCCEEDED(
+		D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "ps_5_0", 0, 0, &m_blob, &error_blob)))
 	{
 		if (error_blob) error_blob->Release();
 		return false;
@@ -206,49 +209,49 @@ void GraphicsEngine::releaseCompiledShader()
 
 //bool GraphicsEngine::Render()
 //{
-	//bool result;
+//bool result;
 
-	//// Render the entire scene to the texture first.
-	//result = RenderToTexture();
-	//if (!result)
-	//{
-	//	return false;
-	//}
+//// Render the entire scene to the texture first.
+//result = RenderToTexture();
+//if (!result)
+//{
+//	return false;
+//}
 
-	//// Clear the buffers to begin the scene.
-	//m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
-	//BeginScene = ...
-	//{
-	//	float color[4];
-	//	// Setup the color to clear the buffer to.
-	//	color[0] = red;
-	//	color[1] = green;
-	//	color[2] = blue;
-	//	color[3] = alpha;
+//// Clear the buffers to begin the scene.
+//m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+//BeginScene = ...
+//{
+//	float color[4];
+//	// Setup the color to clear the buffer to.
+//	color[0] = red;
+//	color[1] = green;
+//	color[2] = blue;
+//	color[3] = alpha;
 
-	//	// Clear the back buffer.
-	//	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
+//	// Clear the back buffer.
+//	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
 
-	//	// Clear the depth buffer.
-	//	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-	//}
+//	// Clear the depth buffer.
+//	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+//}
 
-	//// Render the scene as normal to the back buffer.
-	//result = RenderScene();
-	//if (!result)
-	//{
-	//	return false;
-	//}
+//// Render the scene as normal to the back buffer.
+//result = RenderScene();
+//if (!result)
+//{
+//	return false;
+//}
 //}
 
 void GraphicsEngine::RenderToTexture(SwapChain* swap_chain)
 {
-
 	// Set the render target to be the render to texture.
 	m_RenderTexture->SetRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView());
 
 	// Clear the render to texture.
-	m_RenderTexture->ClearRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView(), 0.0f, 1.0f, 0.0f, 1.0f);
+	m_RenderTexture->ClearRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView(), 0.0f, 1.0f,
+	                                   0.0f, 1.0f);
 
 	// Render the scene now and it will draw to the render to texture instead of the back buffer.
 	//result = RenderScene();
@@ -269,7 +272,3 @@ RenderTexture* GraphicsEngine::getRenderedTexture()
 {
 	return this->m_RenderTexture;
 }
-
-
-
-

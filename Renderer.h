@@ -14,8 +14,8 @@ public:
 	static void initialize();
 	static void destroy();
 
-	void initializeQuads(std::string name, struct vertex list[], void* shader_byte_code, size_t size_shader);
-	void initializeQuadsAnim(std::string name, struct vertexAnim list[], void* shader_byte_code, size_t size_shader);
+	void initializeQuads(std::string name, void* shader_byte_code, size_t size_shader);
+	void initializeQuadsAnim(std::string name, void* shader_byte_code, size_t size_shader);
 	void initializeQuadConst();
 	void insertQuads(class Quads* quad);
 	void releaseQuads();

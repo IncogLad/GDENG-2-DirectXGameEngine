@@ -267,5 +267,8 @@
     <FxCompile Include="shader.fx">
       <Filter>GameEngine\GraphicsEngine</Filter>
     </FxCompile>
+    <FxCompile Include="PixelShaderTest.hlsl">
+      <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
