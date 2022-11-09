@@ -135,7 +135,7 @@ void AppWindow::onUpdate()
 		i->draw(m_vs, m_ps);
 	}
 
-	UISystem::getInstance()->update(this->m_swap_chain);
+	UISystem::getInstance()->update();
 
 	m_swap_chain->present(true);
 

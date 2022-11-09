@@ -61,6 +61,9 @@
     <Filter Include="GameEngine\GraphicsEngine\RenderToTexture">
       <UniqueIdentifier>{45f89b5e-a328-4c6d-b972-e47f420978f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UISystem\UIScreen">
+      <UniqueIdentifier>{83ae8fd3-1e4a-4eca-9105-1e6ce79feb56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -141,13 +144,33 @@
     <ClCompile Include="UISystem.cpp">
       <Filter>GameEngine\UISystem</Filter>
     </ClCompile>
-    <ClCompile Include="Viewport.cpp">
-      <Filter>GameEngine\UISystem</Filter>
-    </ClCompile>
     <ClCompile Include="RenderTexture.cpp">
       <Filter>GameEngine\GraphicsEngine\RenderToTexture</Filter>
     </ClCompile>
-    <ClCompile Include="SceneCameraHandler.cpp" />
+    <ClCompile Include="AUIScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneCameraHandler.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditsScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="GameView.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuToolBar.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="PerspectiveView.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="TopdownView.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorPicker.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -243,13 +266,33 @@
     <ClInclude Include="UISystem.h">
       <Filter>GameEngine\UISystem</Filter>
     </ClInclude>
-    <ClInclude Include="Viewport.h">
-      <Filter>GameEngine\UISystem</Filter>
-    </ClInclude>
     <ClInclude Include="RenderTexture.h">
       <Filter>GameEngine\GraphicsEngine\RenderToTexture</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCameraHandler.h" />
+    <ClInclude Include="AUIScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCameraHandler.h">
+      <Filter>GameEngine\GraphicsEngine\RenderManager\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="GameView.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuToolBar.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="PerspectiveView.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="TopdownView.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorPicker.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">

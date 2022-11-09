@@ -1,8 +1,12 @@
 #include "UISystem.h"
+
+#include "CreditsScreen.h"
+#include "GameView.h"
 #include "imgui\imgui.h"
 #include "imgui\imgui_impl_win32.h"
 #include "imgui\imgui_impl_dx11.h"
 #include "GraphicsEngine.h"
+#include "MenuToolBar.h"
 
 UISystem* UISystem::sharedInstance = nullptr;
 
@@ -46,9 +50,20 @@ void UISystem::initImGUI(HWND hwnd)
     ImGui_ImplWin32_Init(hwnd);
     ImGui_ImplDX11_Init(GraphicsEngine::getInstance()->m_d3d_device, GraphicsEngine::getInstance()->m_imm_context);
 
-    Viewport* viewport = new Viewport();
-    viewport->initialize();
-    sharedInstance->viewportList.push_back(viewport);
+    CreditsScreen* credits_screen = new CreditsScreen();
+    uiTable[uiNames.CREDITS_SCREEN] = credits_screen;
+    uiList.push_back(credits_screen);
+
+    MenuToolBar* menu_tool_bar = new MenuToolBar();
+    uiTable[uiNames.MENU_TOOL_BAR] = menu_tool_bar;
+    uiList.push_back(menu_tool_bar);
+
+    GameView* game_view = new GameView();
+    uiTable[uiNames.GAME_VIEW] = game_view;
+    uiList.push_back(game_view);
+
+
+
 }
 
 void UISystem::updateNewFrame()
@@ -60,33 +75,19 @@ void UISystem::updateNewFrame()
 
 }
 
-void UISystem::update(SwapChain* swapChain)
+void UISystem::update()
 {
-    
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
-	static char name[32] = "nice";
-    /*
-    ImGui::Begin("make window");
+	
     
-    if (ImGui::Button("create window")) {
-        char* s = name;
-        //create_window(s);
-        Viewport* viewport = new Viewport();
-        viewport->initialize();
-        sharedInstance->viewportList.push_back(viewport);
+    for (auto const& i : uiList) {
+        i->drawUI();
     }
-    ImGui::End();
-    */
-    for (auto const& i : viewportList) {
-        i->update(name);
-    }
-    
 
     // Rendering
     ImGui::Render();
-   
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -107,5 +108,3 @@ void UISystem::destroy()
     ImGui::DestroyContext();
     delete sharedInstance;
 } 
-
-

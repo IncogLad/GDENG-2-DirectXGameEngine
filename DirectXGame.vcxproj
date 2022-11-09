@@ -134,11 +134,15 @@
   <ItemGroup>
     <ClCompile Include="AGameObject.cpp" />
     <ClCompile Include="AppWindow.cpp" />
+    <ClCompile Include="AUIScreen.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ColorPicker.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="CreditsScreen.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="GameView.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -150,26 +154,32 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuToolBar.cpp" />
+    <ClCompile Include="PerspectiveView.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Quads.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="SceneCameraHandler.cpp" />
     <ClCompile Include="SwapChain.cpp" />
+    <ClCompile Include="TopdownView.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
-    <ClCompile Include="Viewport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AGameObject.h" />
     <ClInclude Include="AppWindow.h" />
+    <ClInclude Include="AUIScreen.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColorPicker.h" />
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="CreditsScreen.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="GameView.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -183,6 +193,8 @@
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Matrix4x4.h" />
+    <ClInclude Include="MenuToolBar.h" />
+    <ClInclude Include="PerspectiveView.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Quads.h" />
@@ -190,12 +202,12 @@
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="SceneCameraHandler.h" />
     <ClInclude Include="SwapChain.h" />
+    <ClInclude Include="TopdownView.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vector4D.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
-    <ClInclude Include="Viewport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
