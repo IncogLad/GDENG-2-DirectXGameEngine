@@ -1,6 +1,6 @@
 #pragma once
 #include "AUIScreen.h"
-
+#include "Texture.h"
 
 class CreditsScreen : public AUIScreen
 {
@@ -10,5 +10,7 @@ public:
 	~CreditsScreen();
 
 	void drawUI() override;
+
+	Texture* logoImage;
 };
 

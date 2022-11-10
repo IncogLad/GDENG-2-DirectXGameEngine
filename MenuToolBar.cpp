@@ -122,14 +122,14 @@ void MenuToolBar::drawUI()
         {
             if (ImGui::MenuItem("Color Picker"))
             {
-                /*if (UISystem::getInstance()->uiTable["COLOR_PICKER"]->open == true)
+                if (UISystem::getInstance()->uiTable["COLOR_PICKER"]->open == true)
                 {
                     UISystem::getInstance()->uiTable["COLOR_PICKER"]->open = false;
                 }
                 else
                 {
                     UISystem::getInstance()->uiTable["COLOR_PICKER"]->open = true;
-                }*/
+                }
             }
             ImGui::EndMenu();
         }

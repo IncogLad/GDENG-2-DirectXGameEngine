@@ -10,6 +10,8 @@ class PixelShader;
 class IndexBuffer;
 class UISystem;
 class RenderTexture;
+class Texture;
+class TextureManager;
 
 class GraphicsEngine
 {
@@ -42,7 +44,7 @@ public:
 	void SetBackBufferRenderTarget(SwapChain* swap_chain);
 
 	RenderTexture* getRenderedTexture();
-	
+	TextureManager* getTextureManager();
 public:
 	static GraphicsEngine* getInstance();
 
@@ -66,6 +68,8 @@ private:
 	ID3DBlob* m_psblob = nullptr;
 	ID3D11VertexShader* m_vs = nullptr;
 	ID3D11PixelShader* m_ps = nullptr;
+
+	TextureManager* m_tex_manager = nullptr;
 private:
 	friend class SwapChain;
 	friend class VertexBuffer;
@@ -75,4 +79,6 @@ private:
 	friend class IndexBuffer;
 	friend class UISystem;
 	friend class RenderTexture;
+	friend class Texture;
+	friend class TextureManager;
 };

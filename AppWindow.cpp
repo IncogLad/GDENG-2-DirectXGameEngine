@@ -6,6 +6,7 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "SceneCameraHandler.h"
+#include "TextureManager.h"
 #include "UISystem.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
@@ -47,6 +48,8 @@ void AppWindow::onCreate()
 	
 	UISystem::getInstance()->initialize();
 	UISystem::getInstance()->initImGUI(this->m_hwnd);
+
+	
 
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	RECT rc = this->getClientWindowRect();

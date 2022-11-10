@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "AUIScreen.h"
+#include "Texture.h"
 
 
 typedef std::string String;
@@ -53,6 +54,8 @@ private:
 	UINames uiNames;
 	UIList uiList;
 	UITable uiTable;
+
+	Texture* wood;
 
 	bool show_demo_window = true;
 

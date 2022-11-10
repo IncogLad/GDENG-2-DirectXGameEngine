@@ -10,6 +10,7 @@
 #include <d3dcompiler.h>
 
 #include "RenderTexture.h"
+#include "TextureManager.h"
 
 GraphicsEngine* GraphicsEngine::sharedInstance = nullptr;
 
@@ -73,6 +74,7 @@ bool GraphicsEngine::init()
 	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
 
+	m_tex_manager = new TextureManager();
 
 	return true;
 }
@@ -91,10 +93,13 @@ bool GraphicsEngine::release()
 	m_dxgi_factory->Release();
 
 	m_imm_device_context->release();
+	delete m_tex_manager;
 
 	m_d3d_device->Release();
 
+	
 	m_RenderTexture->Shutdown();
+	
 	return true;
 }
 
@@ -207,43 +212,6 @@ void GraphicsEngine::releaseCompiledShader()
 	if (m_blob)m_blob->Release();
 }
 
-//bool GraphicsEngine::Render()
-//{
-//bool result;
-
-//// Render the entire scene to the texture first.
-//result = RenderToTexture();
-//if (!result)
-//{
-//	return false;
-//}
-
-//// Clear the buffers to begin the scene.
-//m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
-//BeginScene = ...
-//{
-//	float color[4];
-//	// Setup the color to clear the buffer to.
-//	color[0] = red;
-//	color[1] = green;
-//	color[2] = blue;
-//	color[3] = alpha;
-
-//	// Clear the back buffer.
-//	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
-
-//	// Clear the depth buffer.
-//	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-//}
-
-//// Render the scene as normal to the back buffer.
-//result = RenderScene();
-//if (!result)
-//{
-//	return false;
-//}
-//}
-
 void GraphicsEngine::RenderToTexture(SwapChain* swap_chain)
 {
 	// Set the render target to be the render to texture.
@@ -252,23 +220,19 @@ void GraphicsEngine::RenderToTexture(SwapChain* swap_chain)
 	// Clear the render to texture.
 	m_RenderTexture->ClearRenderTarget(sharedInstance->m_imm_context, swap_chain->getDepthStencilView(), 0.0f, 1.0f,
 	                                   0.0f, 1.0f);
-
-	// Render the scene now and it will draw to the render to texture instead of the back buffer.
-	//result = RenderScene();
-	//if (!result)
-	//{
-	//	return false;
-	//}
 }
 
 void GraphicsEngine::SetBackBufferRenderTarget(SwapChain* swap_chain)
 {
-	// Reset the render target back to the original back buffer and not the render to texture anymore.
-	//m_D3D->SetBackBufferRenderTarget(); =...
 	sharedInstance->m_imm_context->OMSetRenderTargets(1, &swap_chain->m_rtv, swap_chain->getDepthStencilView());
 }
 
 RenderTexture* GraphicsEngine::getRenderedTexture()
 {
 	return this->m_RenderTexture;
+}
+
+TextureManager* GraphicsEngine::getTextureManager()
+{
+	return this->m_tex_manager;
 }
