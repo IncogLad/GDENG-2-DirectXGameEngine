@@ -97,7 +97,8 @@ void AppWindow::onCreate()
 
 	Renderer::getInstance()->initializeQuadConst();
 	Renderer::getInstance()->initializeCubeConst();
-	
+	m_rs = GraphicsEngine::getInstance()->createRasterizer_state(true);
+
 }
 
 void AppWindow::onUpdate()
@@ -127,6 +128,7 @@ void AppWindow::onUpdate()
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRasterizerState(m_rs);
 
 	UISystem::getInstance()->updateNewFrame();
 

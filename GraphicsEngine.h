@@ -12,6 +12,7 @@ class UISystem;
 class RenderTexture;
 class Texture;
 class TextureManager;
+class RasterizerState;
 
 class GraphicsEngine
 {
@@ -33,6 +34,8 @@ public:
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
 	PixelShader* createPixelShader(const void* shader_byte_code, size_t byte_code_size);
 	bool createRenderTexture(int textureWidth, int textureHeight);
+	RasterizerState* createRasterizer_state(bool wireframe);
+
 	
 public:
 	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
@@ -81,4 +84,6 @@ private:
 	friend class RenderTexture;
 	friend class Texture;
 	friend class TextureManager;
+	friend class RasterizerState;
+
 };

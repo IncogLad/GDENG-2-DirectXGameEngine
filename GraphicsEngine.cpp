@@ -11,6 +11,7 @@
 
 #include "RenderTexture.h"
 #include "TextureManager.h"
+#include "RasterizerState.h"
 
 GraphicsEngine* GraphicsEngine::sharedInstance = nullptr;
 
@@ -172,6 +173,20 @@ bool GraphicsEngine::createRenderTexture(int textureWidth, int textureHeight)
 
 	return result;
 }
+
+RasterizerState* GraphicsEngine::createRasterizer_state(bool wireframe)
+{
+	RasterizerState* rs = new RasterizerState();
+
+	if (!rs->init(wireframe))
+	{
+		rs->release();
+		return nullptr;
+
+	}
+	return rs;
+}
+
 
 bool GraphicsEngine::compileVertexShader(const wchar_t* file_name, const char* entry_point_name,
                                          void** shader_byte_code, size_t* byte_code_size)

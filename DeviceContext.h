@@ -7,6 +7,7 @@ class ConstantBuffer;
 class VertexShader;
 class PixelShader;
 class IndexBuffer;
+class RasterizerState;
 
 class DeviceContext
 {
@@ -20,6 +21,8 @@ public:
 	void drawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location);
 
 	void setViewportSize(UINT width, UINT height);
+
+	void setRasterizerState(RasterizerState* rasterizerState);
 
 	void setVertexShader(VertexShader* vertex_shader);
 	void setPixelShader(PixelShader* pixel_shader);

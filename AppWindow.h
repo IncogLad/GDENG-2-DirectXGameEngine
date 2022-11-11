@@ -31,6 +31,7 @@ public:
 	virtual void onLeftMouseUp(const Point& mouse_pos) override;
 	virtual void onRightMouseDown(const Point& mouse_pos) override;
 	virtual void onRightMouseUp(const Point& mouse_pos) override;
+	RasterizerState* m_rs;
 
 	float move_cube = 0.0f;
 
