@@ -9,7 +9,7 @@
 #include "EngineTime.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
-#include "SceneCameraHandler.h"
+#include "CameraHandler.h"
 
 
 Cube::Cube()
@@ -54,16 +54,16 @@ void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.25f,-0.25f,-0.25f),    Vector3D(1,0,1),  Vector3D(0.2f,0,1) },
-		{Vector3D(-0.25f,0.25f,-0.25f),    Vector3D(1,1,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(0.25f,0.25f,-0.25f),   Vector3D(1,1,0),  Vector3D(0.2f,1,0) },
-		{ Vector3D(0.25f,-0.25f,-0.25f),     Vector3D(0,0,1), Vector3D(0.2f,0,0) },
+		{Vector3D(-1.0f,-1.0f,-1.0f),    Vector3D(1,0,1),  Vector3D(0.2f,0,1) },
+		{Vector3D(-1.0f,1.0f,-1.0f),    Vector3D(1,1,0), Vector3D(0,0.2f,0) },
+		{ Vector3D(1.0f,1.0f,-1.0f),   Vector3D(1,1,0),  Vector3D(0.2f,1,0) },
+		{ Vector3D(1.0f,-1.0f,-1.0f),     Vector3D(0,0,1), Vector3D(0.2f,0,0) },
 
 		//BACK FACE
-		{ Vector3D(0.25f,-0.25f,0.25f),    Vector3D(1,0,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(0.25f,0.25f,0.25f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.25f,0.25f,0.25f),   Vector3D(0,0,1),  Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.25f,-0.25f,0.25f),     Vector3D(0,1,0), Vector3D(1,0,0) }
+		{ Vector3D(1.0f,-1.0f,1.0f),    Vector3D(1,0,0), Vector3D(0,0.2f,0) },
+		{ Vector3D(1.0f,1.0f,1.0f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
+		{ Vector3D(-1.0f,1.0f,1.0f),   Vector3D(0,0,1),  Vector3D(0,0.2f,0.2f) },
+		{ Vector3D(-1.0f,-1.0f,1.0f),     Vector3D(0,1,0), Vector3D(1,0,0) }
 
 	};
 
@@ -105,7 +105,7 @@ void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
 	if (this->num == 0) {
 		UINT size_list = ARRAYSIZE(vertex_list);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(vertex_list_white_cube, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
 	}
 	else {
 		UINT size_list = ARRAYSIZE(plane_vertex_list);
@@ -206,6 +206,7 @@ void Cube::updatePosition()
 	//no6
 	if (name == "plane") {
 		setScale(Vector3D(4, 4, 4));
+		setPosition(Vector3D(0.0f, 0.0f, 0.0f));
 	}
 	if (name == "cube0")
 	{
@@ -313,7 +314,7 @@ void Cube::updatePosition()
 
 	//VIEW MATRIX
 	cc.m_view.setIdentity();
-	cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
+	cc.m_view = CameraHandler::getInstance()->getSceneCameraViewMatrix();
 	
 	//PROJ MATRIX
 	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);

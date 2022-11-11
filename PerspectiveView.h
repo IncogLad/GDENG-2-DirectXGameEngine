@@ -5,7 +5,7 @@ class PerspectiveView : public AUIScreen
 public:
 	typedef std::string String;
 	PerspectiveView();
-	~PerspectiveView();
+	~PerspectiveView() override;
 
 
 	void drawUI() override;

@@ -16,7 +16,8 @@ void Camera::initialize(std::string name)
 	AGameObject::initialize(name);
 	InputSystem::get()->addListener(this);
 	this->worldCam.setIdentity();
-	this->worldCam.setTranslation(Vector3D(0, 0, -2));
+	this->worldCam.setTranslation(Vector3D(0, 20, 0));
+	//this->worldCam.setRotationX(90);
 	//camPos.zeros();
 }
 
@@ -37,15 +38,16 @@ void Camera::update(float deltaTime)
 	temp.setIdentity();
 
 	Matrix4x4 xMatrix; xMatrix.setIdentity();
-	xMatrix.setRotationX(this->m_rot_x);
+	xMatrix.setRotationX(1.45);
 	temp *= xMatrix;
 
 	Matrix4x4 yMatrix; yMatrix.setIdentity();
-	yMatrix.setRotationY(this->m_rot_y);
+	yMatrix.setRotationY(0);
 	temp *= yMatrix;
 
 
 	Vector3D new_pos = worldCam.getTranslation() + temp.getZDirection() * (m_forward * deltaTime * 1.5f);
+	new_pos = new_pos + temp.getYDirection() * (m_upward * deltaTime * 1.5f);
 	new_pos = new_pos + temp.getXDirection() * (m_rightward * deltaTime * 1.5f);
 	temp.setTranslation(new_pos);
 
@@ -85,12 +87,23 @@ void Camera::onKeyDown(int key)
 		this->m_rightward = 1.0f;
 		std::cout << "D pressed" << std::endl;
 	}
+	else if (key == 'Q')
+	{
+		this->m_upward = 1.0f;
+		std::cout << "Q pressed" << std::endl;
+	}
+	else if (key == 'E')
+	{
+		this->m_upward = -1.0f;
+		std::cout << "E pressed" << std::endl;
+	}
 }
 
 void Camera::onKeyUp(int key)
 {
 	this->m_forward = 0.0f;
 	this->m_rightward = 0.0f;
+	this->m_upward = 0.0f;
 }
 
 void Camera::onMouseMove(const Point& mouse_pos)

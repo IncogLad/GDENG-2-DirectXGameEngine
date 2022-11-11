@@ -156,7 +156,7 @@
     <ClCompile Include="AUIScreen.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
-    <ClCompile Include="SceneCameraHandler.cpp">
+    <ClCompile Include="CameraHandler.cpp">
       <Filter>GameEngine\GraphicsEngine\RenderManager\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CreditsScreen.cpp">
@@ -291,7 +291,7 @@
     <ClInclude Include="AUIScreen.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCameraHandler.h">
+    <ClInclude Include="CameraHandler.h">
       <Filter>GameEngine\GraphicsEngine\RenderManager\Camera</Filter>
     </ClInclude>
     <ClInclude Include="CreditsScreen.h">

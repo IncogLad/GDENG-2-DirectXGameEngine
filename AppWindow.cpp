@@ -5,7 +5,7 @@
 #include "EngineTime.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-#include "SceneCameraHandler.h"
+#include "CameraHandler.h"
 #include "TextureManager.h"
 #include "UISystem.h"
 
@@ -44,7 +44,7 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
-	SceneCameraHandler::getInstance()->initialize();
+	CameraHandler::getInstance()->initialize();
 	
 	UISystem::getInstance()->initialize();
 	UISystem::getInstance()->initImGUI(this->m_hwnd);
@@ -55,8 +55,7 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	//m_world_cam.setTranslation(Vector3D(0, 0, -2));
-
+	
 	Renderer::initialize();
 
 	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
@@ -97,7 +96,7 @@ void AppWindow::onCreate()
 
 	Renderer::getInstance()->initializeQuadConst();
 	Renderer::getInstance()->initializeCubeConst();
-	m_rs = GraphicsEngine::getInstance()->createRasterizer_state(true);
+	m_rs = GraphicsEngine::getInstance()->createRasterizer_state(false);
 
 }
 
@@ -106,7 +105,7 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	InputSystem::get()->update();
-	SceneCameraHandler::getInstance()->update();
+	CameraHandler::getInstance()->update();
 	//////////////RENDER TO TEXTURE///////////////////
 	GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
 

@@ -6,6 +6,7 @@
 
 TopdownView::TopdownView() :AUIScreen("TOPDOWN_VIEW")
 {
+    open = false;
 }
 
 TopdownView::~TopdownView()
@@ -14,7 +15,10 @@ TopdownView::~TopdownView()
 
 void TopdownView::drawUI()
 {
-    ImGui::Begin("Game View");
-    ImGui::Image(GraphicsEngine::getInstance()->getRenderedTexture()->GetShaderResourceView(), ImVec2(512, 512));
-    ImGui::End();
+    if (open) {
+        ImGui::Begin("Topdown View");
+        ImGui::Image(GraphicsEngine::getInstance()->getRenderedTexture()->GetShaderResourceView(), ImVec2(512, 512));
+        ImGui::End();
+        
+    }
 }

@@ -36,6 +36,7 @@ public:
 
 	float m_forward = 0.0f;
 	float m_rightward = 0.0f;
+	float m_upward = 0.0f;
 private:
 	
 

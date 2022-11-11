@@ -1,4 +1,5 @@
 #include "UISystem.h"
+#include "UISystem.h"
 
 #include "ColorPicker.h"
 #include "CreditsScreen.h"
@@ -9,6 +10,8 @@
 #include "GraphicsEngine.h"
 #include "TextureManager.h"
 #include "MenuToolBar.h"
+#include "PerspectiveView.h"
+#include "TopdownView.h"
 
 UISystem* UISystem::sharedInstance = nullptr;
 
@@ -70,6 +73,14 @@ void UISystem::initImGUI(HWND hwnd)
     uiTable[uiNames.COLOR_PICKER] = color_picker;
     uiList.push_back(color_picker);
 
+    PerspectiveView* perspective_view = new PerspectiveView();
+    uiTable[uiNames.PERSPECTIVE_VIEW] = perspective_view;
+    uiList.push_back(perspective_view);
+
+    TopdownView* topdown_view = new TopdownView();
+    uiTable[uiNames.TOPDOWN_VIEW] = topdown_view;
+    uiList.push_back(topdown_view);
+
 }
 
 void UISystem::updateNewFrame()
@@ -92,9 +103,7 @@ void UISystem::update()
         i->drawUI();
     }
 
-    /*ImGui::Begin("Test");
-    ImGui::Image(wood->getShaderResourceView(), ImVec2(500, 500));
-    ImGui::End();*/
+    
     // Rendering
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

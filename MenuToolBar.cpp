@@ -116,6 +116,28 @@ void MenuToolBar::drawUI()
                     UISystem::getInstance()->uiTable["GAME_VIEW"]->open = true;
                 }
             }
+            if (ImGui::MenuItem("Perspective View"))
+            {
+                if (UISystem::getInstance()->uiTable["PERSPECTIVE_VIEW"]->open == true)
+                {
+                    UISystem::getInstance()->uiTable["PERSPECTIVE_VIEW"]->open = false;
+                }
+                else
+                {
+                    UISystem::getInstance()->uiTable["PERSPECTIVE_VIEW"]->open = true;
+                }
+            }
+            if (ImGui::MenuItem("Topdown View"))
+            {
+                if (UISystem::getInstance()->uiTable["TOPDOWN_VIEW"]->open == true)
+                {
+                    UISystem::getInstance()->uiTable["TOPDOWN_VIEW"]->open = false;
+                }
+                else
+                {
+                    UISystem::getInstance()->uiTable["TOPDOWN_VIEW"]->open = true;
+                }
+            }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Tools"))

@@ -6,6 +6,7 @@
 
 PerspectiveView::PerspectiveView() :AUIScreen("PERSPECTIVE_VIEW")
 {
+    open = false;
 }
 
 PerspectiveView::~PerspectiveView()
@@ -14,7 +15,9 @@ PerspectiveView::~PerspectiveView()
 
 void PerspectiveView::drawUI()
 {
-    ImGui::Begin("Game View");
-    ImGui::Image(GraphicsEngine::getInstance()->getRenderedTexture()->GetShaderResourceView(), ImVec2(512, 512));
-    ImGui::End();
+    if (open) {
+        ImGui::Begin("Perspective View");
+        ImGui::Image(GraphicsEngine::getInstance()->getRenderedTexture()->GetShaderResourceView(), ImVec2(512, 512));
+        ImGui::End();
+    }
 }

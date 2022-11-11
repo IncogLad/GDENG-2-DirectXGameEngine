@@ -5,7 +5,7 @@
 #include "Renderer.h"
 #include "DeviceContext.h"
 #include "ConstantBuffer.h"
-#include "SceneCameraHandler.h"
+#include "CameraHandler.h"
 #include "VertexBuffer.h"
 
 
@@ -160,7 +160,7 @@ void Quads::updatePosition()
 
 	//VIEW MATRIX
 	cc.m_view.setIdentity();
-	cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
+	cc.m_view = CameraHandler::getInstance()->getSceneCameraViewMatrix();
 
 	//PROJ MATRIX
 	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);

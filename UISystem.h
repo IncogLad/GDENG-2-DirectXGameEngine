@@ -15,7 +15,7 @@ class CreditsScreen;
 class MenuToolBar;
 class GameView;
 class PerspectiveView;
-class TopDownView;
+class TopdownView;
 class ColorPicker;
 
 class UINames
@@ -55,8 +55,6 @@ private:
 	UIList uiList;
 	UITable uiTable;
 
-	Texture* wood;
-
 	bool show_demo_window = true;
 
 private:
@@ -65,6 +63,6 @@ private:
 	friend class ColorPicker;
 	friend class GameView;
 	friend class PerspectiveView;
-	friend class TopDownView;
+	friend class TopdownView;
 };
 

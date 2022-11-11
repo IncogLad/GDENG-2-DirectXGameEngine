@@ -167,7 +167,7 @@
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="SceneCameraHandler.cpp" />
+    <ClCompile Include="CameraHandler.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -213,7 +213,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="SceneCameraHandler.h" />
+    <ClInclude Include="CameraHandler.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
