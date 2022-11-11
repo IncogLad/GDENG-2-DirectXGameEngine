@@ -162,6 +162,7 @@
     <ClCompile Include="PerspectiveView.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Quads.cpp" />
+    <ClCompile Include="RasterizerState.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Resource.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Quads.h" />
+    <ClInclude Include="RasterizerState.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Resource.h" />
